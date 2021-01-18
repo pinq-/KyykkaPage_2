@@ -9,9 +9,41 @@
 
       <b-collapse id="nav-collapse" is-nav>
         Kyykka tilastot
+        <b-container class="w-25">
+          <b-col>
+            <b-dropdown :text="year ? year.text : 'Valitse vuosi'">
+              <b-dropdown-item
+                :disabled="option.disabled"
+                @click="select_year(option)"
+                v-for="option in options_years"
+                :key="option.value"
+              >
+                <div>
+                  <img :src=option.src width="30">
+                  {{option.text}}
+                </div>
+              </b-dropdown-item>
+            </b-dropdown>
+          </b-col>
+          <b-col>
+            <b-dropdown :text="liig ? liig.text : 'Valitse liiga'">
+              <b-dropdown-item
+                :disabled="option.disabled"
+                @click="select_liig(option)"
+                v-for="option in options_liig"
+                :key="option.value"
+              >
+                <div>
+                  <img :src=option.src width="30">
+                  {{option.text}}
+                </div>
+              </b-dropdown-item>
+            </b-dropdown>
+          </b-col>
+        </b-container>
       </b-collapse>
     </b-navbar>
-    <router-view :year="year"/>
+    <router-view :year="year" :liig="liig"/>
 
     <div id="nav">
       <b-sidebar id="sidebar-1" title="Sidebar" no-header shadow backdrop>
@@ -34,9 +66,46 @@
   export default {
     data(){
       return {
-        year: 2020,
+        year: {value:2021, text:"2021"},
+        liig:{value: "all", text: "Kaikki"},
+        options_years: [],
+        options_liig: [
+        {
+          value: "all",
+          text: "Kaikki",
+        },
+        {
+          value: "NKL",
+          text: "NKL",
+          src: require("@/assets/NKL_small.png")
+        },
+        {
+          value: "Kyykk",
+          text: "Kyykkaliiga",
+          src: require("@/assets/kyykkaliiga_small.png")
+        },
+        {
+          value: "Oamk",
+          text: "Oamk",
+          src: require("@/assets/oamk_small.png")
+        },
+      ],
       }
     },
+    mounted() {
+      for (let i = 2021; i >= 2021-10; i--) {
+          this.options_years.push({value:i, text:String(i) });
+      }
+      document.title = "Kyykka stats"
+    },
+    methods: {
+    select_year(option) {
+      this.year = option;
+    },
+    select_liig(option) {
+      this.liig = option;
+    }
+  }
   }
 </script>
 <style>
@@ -56,11 +125,18 @@
   font-weight: bold;
   color: #2c3e50;
 }
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
 .navbar.navbar-dark.bg-dark{
    background-color: #0D8F32!important;
+}
+
+select, button {
+  background-color: #2ADB5C!important;
+  border:none !important;
+  outline:none !important;
+  font-weight: bold !important;
+}
+.btn {
+   outline: none !important;
+   box-shadow: none;
 }
 </style>

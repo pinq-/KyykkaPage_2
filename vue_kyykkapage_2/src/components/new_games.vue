@@ -2,9 +2,9 @@
   <div>
     <b-table striped hover :items="litems" :fields="fields" class="font-weight-bold">
       <template #cell(Event__Name)="data">
-        <img v-if="data.item.Event__Name == 'NKL'" src="@/assets/NKL.png" width="30"/>
-        <img v-else-if="data.item.Event__Name.startsWith('K')" src="@/assets/kyykkaliiga.png" width="30"/>
-        <img v-else-if="data.item.Event__Name.startsWith('O')" src="@/assets/oamk.png" width="30"/>
+        <img v-if="data.item.Event__Name == 'NKL'" src="@/assets/NKL_small.png" width="30"/>
+        <img v-else-if="data.item.Event__Name.startsWith('K')" src="@/assets/kyykkaliiga_small.png" width="30"/>
+        <img v-else-if="data.item.Event__Name.startsWith('O')" src="@/assets/oamk_small.png" width="30"/>
         {{data.item.Event__Name.split("/")[1]}}
       </template>
       <template #cell(Home_result)="data">
@@ -38,6 +38,7 @@
   import moment from 'moment';
 
   export default {
+    props:["liig"],
     data(){
       return {
         litems: [],
@@ -45,7 +46,7 @@
           { key: "Game_time", formatter: (value) => {
             return moment.utc(value).format('HH:mm DD.MM.YY')
           }, label: 'Aika'},
-          { key: "Event__Name", label: "Tapahtuma" },
+          { key: "Event__Name", label: "Liiga" },
           { key: "Home_team_name", label: "Koti joukkue"},
           { key: "Home_result", label: "Koti tulos"},
           { key: "Away_result", label: "Vieras tulos"},
@@ -55,13 +56,22 @@
       }
     },
     mounted() {
-      axios
-      .get('https://pinq.kapsi.fi/DK/api/data/new_games_10/all')
-      .then(response => (this.parse_values(response.data)));
+      this.get_data();
     },
     methods: {
       parse_values(data) {
         this.litems = data;
+      },
+      get_data(){
+        axios
+        .get('https://pinq.kapsi.fi/DK/api/data/new_games_10/' +this.liig.value)
+        // .get('http://127.0.0.1:8000/DK/api/data/new_games_10/' +this.liig.value)
+        .then(response => (this.parse_values(response.data)));
+      }
+    },
+    watch: {
+      liig: function () {
+        this.get_data();
       },
     }
   }

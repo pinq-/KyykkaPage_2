@@ -17,8 +17,8 @@ Vue.use(HighchartsVue, {
 	highcharts: Highcharts
 })
 
-Vue.config.productionTip = false
-
+Vue.config.productionTip = false;
+// Vue.prototype.window = window;
 new Vue({
   router,
   render: h => h(App)

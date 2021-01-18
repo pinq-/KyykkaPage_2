@@ -14,7 +14,7 @@ require('highcharts-histogram-bellcurve')
         histogram_plot: [],
         chartOptions: {
               chart: {
-                  type: 'histogram'
+                  type: 'histogram',
               },
               title: {
                   text: ''
@@ -30,23 +30,26 @@ require('highcharts-histogram-bellcurve')
               },
               ],
               // legend: {
-              //           enabled : ($(window).width() > 768)
+              //           enabled : (window.innerWidth > 768)
               // },
 
               yAxis: [{
                   title: { text: '' },
                   height: '33.33%',
                   offset:0,
+                  max: 15,
               }, {
                   title: { text: 'Määrä' },
                   height: '28.33%',
                   top: '38.33%',
                   offset:0,
+                  max: 15,
               },{
                   title: { text: '' },
                   height: '28.33%',
                   top: '71.66%',
                   offset:0,
+                  max: 15,
               }],
               series: [],
               plotOptions: {
@@ -60,9 +63,7 @@ require('highcharts-histogram-bellcurve')
     },
     props:["year"],
     mounted() {
-      axios
-      .get('https://pinq.kapsi.fi/DK/api/data/histogram/' + this.year)
-      .then(response => (this.parse_values(response.data)));
+      this.get_data();
     },
     methods: {
       parse_values(data) {
@@ -138,13 +139,25 @@ require('highcharts-histogram-bellcurve')
             });
          }
        });
-         // this.histogram_plot = histogram_plot;
+        this.chartOptions.series = [];
          this.chartOptions.series = histogram_plot;
 
+      },
+      get_data() {
+
+        axios
+        .get('https://pinq.kapsi.fi/DK/api/data/histogram/' + this.year.value)
+        .then(response => (this.parse_values(response.data)));
+      }
+    },
+    watch: {
+      year: function () {
+        this.get_data();
       },
     }
   }
 </script>
 
 <style lang="css">
+.highcharts-container,  svg { width: 100% !important;}
 </style>
