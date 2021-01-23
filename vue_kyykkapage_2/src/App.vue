@@ -54,6 +54,7 @@
           <div class="px-3 py-2">
             <b-navbar-nav>
               <b-nav-item to="/"><b-icon icon="newspaper" font-scale="1.5"></b-icon> Etusivu</b-nav-item>
+              <b-nav-item to="/e_info"><b-icon icon="journal-bookmark-fill" font-scale="1.5"></b-icon>Extras</b-nav-item>
             </b-navbar-nav>
           </div>
         </template>
@@ -96,7 +97,7 @@
       for (let i = 2021; i >= 2021-10; i--) {
           this.options_years.push({value:i, text:String(i) });
       }
-      document.title = "Kyykka stats"
+      document.title = "Kyykkä Autisti"
     },
     methods: {
     select_year(option) {

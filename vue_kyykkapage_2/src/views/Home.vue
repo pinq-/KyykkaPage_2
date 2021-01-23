@@ -2,7 +2,7 @@
   <div class="home">
     <b-container fluid>
       <b-row>
-        <b-col>
+        <b-col col lg="5">
           <b-card class="font-weight-bold" header="Viimeisimmät pelit" style="overflow:auto">
             <new_games :liig="liig"/>
           </b-card>
@@ -14,12 +14,12 @@
         </b-col>
       </b-row>
       <b-row>
-        <b-col>
+        <b-col col lg="5">
           <b-card class="font-weight-bold" header="Parhaat joukkueet Suomessa" style="overflow:auto">
             <best_teams :liig="liig" :year="year"/>
           </b-card>
         </b-col>
-        <b-col>
+        <b-col col lg="5">
           <b-card class="font-weight-bold" header="Paras Hka Suomessa" style="overflow:auto">
             <best_players :liig="liig" :year="year"/>
           </b-card>
@@ -47,3 +47,8 @@ export default {
   props:["year", "liig"],
 }
 </script>
+<style>
+.maxw {
+  max-width: 200px;
+}
+</style>
