@@ -3,8 +3,9 @@
     <b-container fluid>
       <b-row>
         <b-col col lg="5">
+          <game_modals :selected_game="selected_game"/>
           <b-card class="font-weight-bold" header="Viimeisimmät pelit" style="overflow:auto">
-            <new_games :liig="liig"/>
+            <new_games :liig="liig" v-on="$listeners"/>
           </b-card>
         </b-col>
         <b-col>
@@ -35,6 +36,7 @@ import new_games from '@/components/new_games.vue'
 import histogram from '@/components/histogram.vue'
 import best_teams from '@/components/best_teams.vue'
 import best_players from '@/components/best_players.vue'
+import game_modals from '@/components/game_modals.vue'
 
 export default {
   name: 'Home',
@@ -42,9 +44,10 @@ export default {
     new_games,
     histogram,
     best_teams,
-    best_players
+    best_players,
+    game_modals
   },
-  props:["year", "liig"],
+  props:["year", "liig", "selected_game"],
 }
 </script>
 <style>

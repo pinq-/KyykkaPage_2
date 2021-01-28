@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="bg-dark">
     <b-navbar toggleable="lg" type="dark" variant="dark" class="font-weight-bold">
   <b-navbar-brand v-b-toggle.sidebar-1>
       <b-icon icon="arrow-bar-right" font-scale="2"></b-icon>
@@ -43,7 +43,7 @@
         </b-container>
       </b-collapse>
     </b-navbar>
-    <router-view :year="year" :liig="liig"/>
+    <router-view :year="year" :liig="liig" :selected_game="selected_game" @set_game_id="set_game_id"/>
 
     <div id="nav">
       <b-sidebar id="sidebar-1" title="Sidebar" no-header shadow backdrop>
@@ -54,7 +54,7 @@
           <div class="px-3 py-2">
             <b-navbar-nav>
               <b-nav-item to="/"><b-icon icon="newspaper" font-scale="1.5"></b-icon> Etusivu</b-nav-item>
-              <b-nav-item to="/e_info"><b-icon icon="journal-bookmark-fill" font-scale="1.5"></b-icon>Extras</b-nav-item>
+              <b-nav-item to="/e_info"><b-icon icon="journal-bookmark-fill" font-scale="1.5"></b-icon>Ekstrat</b-nav-item>
             </b-navbar-nav>
           </div>
         </template>
@@ -69,6 +69,7 @@
       return {
         year: {value:2021, text:"2021"},
         liig:{value: "all", text: "Kaikki"},
+        selected_game: 0,
         options_years: [],
         options_liig: [
         {
@@ -105,6 +106,9 @@
     },
     select_liig(option) {
       this.liig = option;
+    },
+    set_game_id(Game_id){
+      this.selected_game = Game_id;
     }
   }
   }
