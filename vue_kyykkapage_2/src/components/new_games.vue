@@ -1,6 +1,6 @@
 <template lang="html">
   <div>
-    <b-table striped hover :items="litems" :fields="fields" class="font-weight-bold" selectable @row-selected="onRowSelected" selectMode= "single">
+    <b-table striped hover :items="litems" :fields="fields" class="font-weight-bold" @row-clicked="onRowSelected">
       <template #cell(Event__Name)="data">
         <img v-if="data.item.Event__Name == 'NKL'" src="@/assets/NKL_small.png" width="30"/>
         <img v-else-if="data.item.Event__Name.startsWith('K')" src="@/assets/kyykkaliiga_small.png" width="30"/>
@@ -63,8 +63,7 @@
         this.litems = data;
       },
       onRowSelected(items) {
-          // console.log(items);
-          this.$emit("set_game_id", items[0].id);
+          this.$emit("set_game_id", items.id);
           // console.log(this.$refs.childComponent);
           this.$bvModal.show("modal-1")
           // this.$refs['v-b-modal.modal-1'].show()
@@ -72,7 +71,6 @@
       get_data(){
         axios
         .get('https://pinq.kapsi.fi/DK/api/data/new_games_10/' +this.liig.value)
-        // .get('http://127.0.0.1:8000/DK/api/data/new_games_10/' +this.liig.value)
         .then(response => (this.parse_values(response.data)));
       }
     },

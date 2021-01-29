@@ -7,11 +7,13 @@
             <b-col class="rounded" :class="{'bg-success': result.Home_result > result.Away_result, 'bg-danger': result.Home_result < result.Away_result, 'bg-secondary': result.Home_result == result.Away_result}">
               {{result.Home_result}}
             </b-col>
-            <b-col class="bg-info rounded" style="font-size: 2.25rem;" lg="8">
+            <b-col style="font-size: 2.25rem;" lg="8">
               <span style=" color:#E0D338;">
                 {{result.Home_team_name}}
               </span>
-              vs.
+              <span class="text-light">
+                vs.
+              </span>
               <span style=" color:#E0D338;">
                 {{result.Away_team_name}}
               </span>
@@ -20,12 +22,23 @@
               {{result.Away_result}}
             </b-col>
           </b-row>
+          <b-row>
+            <b-col style="font-size: 1.25rem;"  class="text-light text-center">
+                {{result.Game_time}}
+            </b-col>
+          </b-row>
         </b-container>
         <b-button size="sm" @click="close()">
           X
         </b-button>
       </template>
       <b-container fluid class="text-center">
+        <b-row>
+          <b-col>
+            <b-table v-b-tooltip striped :items="[result]" :fields="fields_info" class="font-weight-bold text-light">
+            </b-table>
+          </b-col>
+        </b-row>
         <b-row>
           <b-col>
             <h2 class="text-light">Ensimmäinen erä</h2>
@@ -79,6 +92,10 @@
         </b-row>
         <b-row>
           <b-col>
+            <highcharts :options="chartOptions_home"></highcharts>
+          </b-col>
+          <b-col>
+            <highcharts :options="chartOptions_away"></highcharts>
           </b-col>
         </b-row>
       </b-container>
@@ -89,13 +106,13 @@
 
 <script>
 import axios from 'axios'
-// import moment from 'moment';
+import moment from 'moment';
 
 export default {
   props:["selected_game"],
   data(){
     return {
-      game_throws: [],
+      game_throws: [[],[],[],[]],
       result: [],
       last_throws:{home: [0,0], away: [0,0]},
       fields: [
@@ -106,21 +123,115 @@ export default {
         { key: "fourth", label: "4."},
         { key: "yht", label: "yht."},
         { key: "Hka", label: "Hka."},
-      ]
+      ],
+      chartOptions_home: {
+        chart: {
+    backgroundColor: null,
+      },
+          title: {
+              text: 'Poistot',
+              align: 'center',
+              verticalAlign: 'middle',
+              style: {
+                  color: 'white'
+              },
+              y: 60
+          },
+          credits:{enabled:false},
+          tooltip: {
+              pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+          },
+          accessibility: {
+              point: {
+                  valueSuffix: '%'
+              }
+          },
+          plotOptions: {
+              pie: {
+                  dataLabels: {
+                      enabled: true,
+                      distance: -50,
+                      style: {
+                          fontWeight: 'bold',
+                          // color: 'white'
+                      }
+                  },
+                  startAngle: -90,
+                  endAngle: 90,
+                  center: ['50%', '75%'],
+                  size: '110%'
+              }
+          },
+          series: [{
+              type: 'pie',
+              name: 'Osuus heitoista',
+              innerSize: '50%',
+              data: []
+          }]
+      },
+      chartOptions_away: {
+        chart: {
+    backgroundColor: null,
+      },
+          title: {
+              text: 'Poistot',
+              align: 'center',
+              verticalAlign: 'middle',
+              style: {
+                  color: 'white'
+              },
+              y: 60
+          },
+          credits:{enabled:false},
+          tooltip: {
+              pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+          },
+          accessibility: {
+              point: {
+                  valueSuffix: '%'
+              }
+          },
+          plotOptions: {
+              pie: {
+                  dataLabels: {
+                      enabled: true,
+                      distance: -50,
+                      style: {
+                          fontWeight: 'bold',
+                          // color: 'white'
+                      }
+                  },
+                  startAngle: -90,
+                  endAngle: 90,
+                  center: ['50%', '75%'],
+                  size: '110%'
+              }
+          },
+          series: [{
+              type: 'pie',
+              name: 'Osuus heitoista',
+              innerSize: '50%',
+              data: []
+          }]
+      }
     }
   },
   methods: {
     parse_values(data) {
       this.result = data.Results[0];
+      this.result.Game_time = moment.utc(this.result.Game_time).format('HH:mm DD.MM.YY')
+      this.result.max_heitto = 0
+      this.result.Home_hka = 0
+      this.result.Away_hka = 0
       this.parse_throw(data.Throws)
     },
     parse_throw(throws){
-      // var table = ["Home_first", "Game_away_first", "Game_home_second", "Game_away_second"];
-      var throws_order = ["first", "second", "third", "fourth"], data_throws = [[], [], [], []], last_throws = {home: [], away: []};
+      var throws_order = ["first", "second", "third", "fourth"], data_throws = [[], [], [], []], last_throws = {home: [], away: []}, teams_hka = {home: [], away: []};
       var team = "-", last_point = "-", order = "home";
-      var team_round = 0, throw_i = 0;
+      var team_round = 0, throw_i = 0, throwP = 0;
       var player = {Player__Name: "-", first: "-", second: "-", third: "-", fourth: "-", yht: 0, Hka: 0};
       var self = this;
+      var throw_names ={home: [["Hauki", 0],["Virkamies", 0],["2", 0], ["4", 0], ["6", 0], ["8", 0], ["10", 0],["12", 0], [">12", 0]], away: [["Hauki", 0],["Virkamies", 0],["2", 0], ["4", 0], ["6", 0], ["8", 0], ["10", 0],["12", 0], [">12", 0]]};
       throws.forEach(function(val){
         // console.log(val);
         if(player.Player__Name != val.Player__Name){
@@ -146,22 +257,45 @@ export default {
         }
         player[throws_order[throw_i]] = val.Throw_points+' ('+-1*val.Kyykkas_left+')';
         if (!isNaN(val.Throw_points)){
-          player.yht += Number(val.Throw_points);
+          throwP = Number(val.Throw_points);
+          player.yht += throwP;
+          if(throwP > self.result.max_heitto){
+            self.result.max_heitto = throwP
+          }
+          teams_hka[order].push(throwP)
+          throwP = Math.floor(throwP/2);
+          if(throwP < 7 && throwP > -1){
+            throw_names[order][throwP + 1][1]++;
+          }
+          else{
+            throw_names[order][8][1]++;
+
+          }
+        }
+        else{
+          if(val.Throw_points == "h"){
+            throw_names[order][0][1]++;
+          }
+          teams_hka[order].push(0)
+
         }
         throw_i++;
         player.Hka = Number((player.yht/throw_i).toFixed(2));
       });
       last_point = this.get_last_points(player)
       last_throws["away"].push(last_point)
-      // console.log(last_throws)
+      this.chartOptions_home.series[0].data = throw_names["home"];
+      this.chartOptions_away.series[0].data = throw_names["away"];
       // console.log(last_thorws,last_point, last_throw, left, order)
       data_throws[team_round].push(player);
       this.game_throws = data_throws;
       this.last_throws = last_throws;
+      this.result.Home_hka = (teams_hka["home"].reduce((a, b) => a + b, 0)/teams_hka["home"].length).toFixed(2);
+      this.result.Away_hka = (teams_hka["away"].reduce((a, b) => a + b, 0)/teams_hka["away"].length).toFixed(2);
     },
     get_data(){
       axios
-      .get('http://pinq.kapsi.fi/DK/api/data/game/' + this.selected_game)
+      .get('https://pinq.kapsi.fi/DK/api/data/game/' + this.selected_game)
       .then(response => (this.parse_values(response.data)));
     },
     get_last_points(player){
@@ -199,7 +333,18 @@ export default {
     selected_game: function () {
       this.get_data();
     },
+  },
+  computed: {
+  fields_info () {
+    return [
+      { key: "Home_hka", label: this.result.Home_team_name + " Hka."},
+      { key: "Away_hka", label: this.result.Away_team_name + " Hka."},
+      { key: "max_heitto", label: "Paras heitto"},
+      { key: "Game_weather__Snow_deph", label: "Lumen syvyys"},
+      { key: "Game_weather__Temp_day", label: "Lämpötila"},
+    ]
   }
+}
 }
 </script>
 

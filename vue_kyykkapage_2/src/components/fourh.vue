@@ -1,6 +1,6 @@
 <template lang="html">
   <div>
-    <b-table striped hover :items="litems" :fields="fields" class="font-weight-bold" selectable @row-selected="onRowSelected" selectMode= "single">
+    <b-table striped hover :items="litems" :fields="fields" class="font-weight-bold" @row-clicked="onRowSelected">
       <template #cell(Game_id__Event__Name)="data">
         <img v-if="data.item.Game_id__Event__Name == 'NKL'" src="@/assets/NKL_small.png" width="30"/>
         <img v-else-if="data.item.Game_id__Event__Name.startsWith('K')" src="@/assets/kyykkaliiga_small.png" width="30"/>
@@ -44,8 +44,8 @@
         .then(response => (this.parse_values(response.data)));
       },
       onRowSelected(items) {
-        console.log(items[0].Game_id)
-          this.$emit("set_game_id", items[0].Game_id);
+        // console.log(items[0].Game_id)
+          this.$emit("set_game_id", items.Game_id);
           this.$bvModal.show("modal-1")
         },
     },
