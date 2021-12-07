@@ -4,24 +4,24 @@
       <b-row>
         <b-col col lg="5">
           <game_modals :selected_game="selected_game"/>
-          <b-card class="font-weight-bold" header="Viimeisimmät pelit" style="overflow:auto">
+          <b-card class="font-weight-bold m-2" header="Viimeisimmät pelit" style="overflow:auto">
             <new_games :liig="liig" v-on="$listeners"/>
           </b-card>
         </b-col>
-        <b-col>
-          <b-card class="font-weight-bold" header="Liigojen Oka jakautuminen">
+        <b-col lg="5">
+          <b-card class="font-weight-bold m-2" header="Liigojen Oka jakautuminen">
             <histogram :year="year"/>
           </b-card>
         </b-col>
       </b-row>
       <b-row>
         <b-col col lg="5">
-          <b-card class="font-weight-bold" header="Parhaat joukkueet Suomessa" style="overflow:auto">
+          <b-card class="font-weight-bold m-2" header="Parhaat joukkueet Suomessa" style="overflow:auto">
             <best_teams :liig="liig" :year="year"/>
           </b-card>
         </b-col>
         <b-col col lg="5">
-          <b-card class="font-weight-bold" header="Paras Hka Suomessa" style="overflow:auto">
+          <b-card class="font-weight-bold m-2" header="Paras Hka Suomessa" style="overflow:auto">
             <best_players :liig="liig" :year="year"/>
           </b-card>
         </b-col>

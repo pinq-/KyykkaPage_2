@@ -1,6 +1,6 @@
 <template lang="html">
   <div>
-    <b-table striped hover :items="litems" :fields="fields" class="font-weight-bold" @row-clicked="onRowSelected">
+    <b-table  sticky-header striped hover :items="litems" :fields="fields" class="font-weight-bold" @row-clicked="onRowSelected">
       <template #cell(Event__Name)="data">
         <img v-if="data.item.Event__Name == 'NKL'" src="@/assets/NKL_small.png" width="30"/>
         <img v-else-if="data.item.Event__Name.startsWith('K')" src="@/assets/kyykkaliiga_small.png" width="30"/>
