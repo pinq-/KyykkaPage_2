@@ -114,7 +114,7 @@
                     text: String(i)
                 });
             }
-            document.title = "KyykkäAutisti"
+            document.title = "Maksimi kyykkä data"
         },
         methods: {
             select_year(option) {

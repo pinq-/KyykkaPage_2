@@ -1,6 +1,6 @@
 <template lang="html">
   <div>
-    <b-table  sticky-header striped hover :items="litems" :fields="fields" class="font-weight-bold" @row-clicked="onRowSelected">
+    <b-table small striped hover :items="litems" :fields="fields" class="font-weight-bold" @row-clicked="onRowSelected">
       <template #cell(Event__Name)="data">
         <img v-if="data.item.Event__Name == 'NKL'" src="@/assets/NKL_small.png" width="30"/>
         <img v-else-if="data.item.Event__Name.startsWith('K')" src="@/assets/kyykkaliiga_small.png" width="30"/>
@@ -43,15 +43,21 @@
       return {
         litems: [],
         fields: [
+        // format time show it shows only date or hours. if game was doday, then it shows only hours
           { key: "Game_time", formatter: (value) => {
-            return moment.utc(value).format('HH:mm DD.MM.YY')
+            if (moment.utc().diff(moment.utc(value), 'days') < 1){
+              if (moment.utc(value).hours() != 0){
+                return moment.utc(value).format('HH:mm')
+
+              }
+            }
+            return moment.utc(value).format('DD.MM.YY')
           }, label: 'Aika'},
           { key: "Event__Name", label: "Liiga" },
-          { key: "Home_team_name", label: "Koti joukkue"},
+          { key: "Home_team_name", label: "Koti"},
           { key: "Home_result", label: "Koti tulos"},
           { key: "Away_result", label: "Vieras tulos"},
-          { key: "Away_team_name", label: "Vieras joukkue"},
-          { key: "Temp", label: "Lämpötila"},
+          { key: "Away_team_name", label: "Vieras"}
         ]
       }
     },

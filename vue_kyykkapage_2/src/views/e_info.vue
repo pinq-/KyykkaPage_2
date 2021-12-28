@@ -14,7 +14,7 @@
 </template>
 
 <script>
-// @ is an alias to /src
+
 import fourh from '@/components/fourh.vue'
 import game_modals from '@/components/game_modals.vue'
 
