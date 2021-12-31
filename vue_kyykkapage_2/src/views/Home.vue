@@ -12,12 +12,12 @@
                 </b-row>
                 <b-row>
                     <b-col>
-                        <b-card class="font-weight-bold m-2 theme2" header="Parhaat joukkueet Suomessa" style="overflow:auto" no-body>
+                        <b-card class="font-weight-bold m-2 theme2" header="Parhaat joukkueet Suomessa" no-body>
                             <best_teams :liig="liig" :year="year" />
                         </b-card>
                     </b-col>
                     <b-col>
-                        <b-card class="font-weight-bold m-2 theme2" header="Paras Hka Suomessa" style="overflow:auto" no-body>
+                        <b-card class="font-weight-bold m-2 theme2" header="Paras Hka Suomessa" no-body>
                             <best_players :liig="liig" :year="year" />
                         </b-card>
                     </b-col>
@@ -25,7 +25,7 @@
             </b-col>
             <b-col lg="3">
                 <game_modals :selected_game="selected_game" />
-                <b-card class="font-weight-bold m-2 theme2" header="Viimeisimmät pelit" style="overflow:auto"  no-body>
+                <b-card class="font-weight-bold m-2 theme2" header="Viimeisimmät pelit"  no-body>
                     <new_games :liig="liig" v-on="$listeners"/>
                 </b-card>
             </b-col>
@@ -53,7 +53,4 @@
     }
 </script>
 <style>
-    .maxw {
-        max-width: 200px;
-    }
 </style>

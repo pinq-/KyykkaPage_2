@@ -35,8 +35,10 @@
       <b-container fluid class="text-center">
         <b-row>
           <b-col>
-            <b-table v-b-tooltip striped :items="[result]" :fields="fields_info" class="font-weight-bold text-light">
+             <b-card class="font-weight-bold m-2 theme2"  no-body>
+            <b-table responsive v-b-tooltip striped :items="[result]" :fields="fields_info" class="font-weight-bold text-light">
             </b-table>
+          </b-card>
           </b-col>
         </b-row>
         <b-row>
@@ -46,8 +48,8 @@
         </b-row>
         <b-row>
           <b-col lg="6">
-            <b-card style="overflow:auto" class="font-weight-bold" :header=result.Home_team_name :footer-bg-variant = "result.Home_round1 > result.Away_round1 ? 'success': 'danger'">
-              <b-table v-b-tooltip striped hover :items="game_throws[0]" :fields="fields" class="font-weight-bold">
+            <b-card no-body class="font-weight-bold theme2" :header=result.Home_team_name :footer-bg-variant = "result.Home_round1 > result.Away_round1 ? 'success': 'danger'">
+              <b-table responsive v-b-tooltip striped hover :items="game_throws[0]" :fields="fields" class="font-weight-bold">
               </b-table>
               <!-- <b-card-footer><em >{{result.Home_round1}} ({{last_throws[0]}})</em></b-card-footer> -->
               <template #footer>
@@ -56,8 +58,8 @@
             </b-card>
           </b-col>
           <b-col lg="6">
-            <b-card style="overflow:auto" class="font-weight-bold" :header=result.Away_team_name :footer-bg-variant = "result.Home_round1 < result.Away_round1 ? 'success': 'danger'">
-              <b-table v-b-tooltip striped hover :items="game_throws[1]" :fields="fields" class="font-weight-bold">
+            <b-card no-body class="font-weight-bold theme2" :header=result.Away_team_name :footer-bg-variant = "result.Home_round1 < result.Away_round1 ? 'success': 'danger'">
+              <b-table responsive v-b-tooltip striped hover :items="game_throws[1]" :fields="fields" class="font-weight-bold">
               </b-table>
               <template #footer>
                 <em>{{result.Away_round1}} ({{last_throws.away[0]}})</em>
@@ -72,8 +74,8 @@
         </b-row>
         <b-row>
           <b-col lg="6">
-            <b-card style="overflow:auto" class="font-weight-bold" :header=result.Home_team_name :footer-bg-variant = "result.Home_round2 > result.Away_round2 ? 'success': 'danger'">
-              <b-table v-b-tooltip striped hover :items="game_throws[2]" :fields="fields" class="font-weight-bold">
+            <b-card no-body class="font-weight-bold theme2" :header=result.Home_team_name :footer-bg-variant = "result.Home_round2 > result.Away_round2 ? 'success': 'danger'">
+              <b-table responsive v-b-tooltip striped hover :items="game_throws[2]" :fields="fields" class="font-weight-bold">
               </b-table>
               <template #footer>
                 <em>{{result.Home_round2}} ({{last_throws.home[1]}})</em>
@@ -81,8 +83,8 @@
             </b-card>
           </b-col>
           <b-col lg="6">
-            <b-card style="overflow:auto" class="font-weight-bold" :header=result.Away_team_name :footer-bg-variant = "result.Home_round2 < result.Away_round2 ? 'success': 'danger'">
-              <b-table v-b-tooltip striped hover :items="game_throws[3]" :fields="fields" class="font-weight-bold">
+            <b-card no-body class="font-weight-bold theme2" :header=result.Away_team_name :footer-bg-variant = "result.Home_round2 < result.Away_round2 ? 'success': 'danger'">
+              <b-table responsive v-b-tooltip striped hover :items="game_throws[3]" :fields="fields" class="font-weight-bold">
               </b-table>
               <template #footer>
                 <em>{{result.Away_round2}} ({{last_throws.away[1]}})</em>
@@ -341,7 +343,7 @@ export default {
       { key: "Away_hka", label: this.result.Away_team_name + " Hka."},
       { key: "max_heitto", label: "Paras heitto"},
       { key: "Game_weather__Snow_deph", label: "Lumen syvyys"},
-      { key: "Game_weather__Temp_day", label: "Lämpötila"},
+      { key: "Game_weather__Temp_day", label: "°C"},
     ]
   }
 }
@@ -354,6 +356,6 @@ export default {
   border-color: #202020;
 }
 .card-header, .card-footer {
-  min-width: 480px !important;
+  /*min-width: 440px !important;*/
 }
 </style>

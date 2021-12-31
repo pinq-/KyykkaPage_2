@@ -1,6 +1,7 @@
 <template lang="html">
   <div>
-    <b-table striped hover :items="litems" :fields="fields" class="font-weight-bold" @row-clicked="onRowSelected">
+    <b-table responsive striped hover :items="litems" :fields="fields" class="font-weight-bold table-sm" 
+    @row-clicked="onRowSelected">
       <template #cell(Game_id__Event__Name)="data">
         <img v-if="data.item.Game_id__Event__Name == 'NKL'" src="@/assets/NKL_small.png" width="30"/>
         <img v-else-if="data.item.Game_id__Event__Name.startsWith('K')" src="@/assets/kyykkaliiga_small.png" width="30"/>
@@ -22,7 +23,7 @@
         litems: [],
         fields: [
           { key: "Game_id__Game_time", formatter: (value) => {
-            return moment.utc(value).format('HH:mm DD.MM.YY')
+            return moment.utc(value).format('DD.MM.YY')
           }, label: 'Aika'},
           { key: "Game_id__Event__Name", label: "Liiga"},
           { key: "Player__Team__Team__Sort_name", label: "Joukkue"},

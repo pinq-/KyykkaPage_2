@@ -58,10 +58,10 @@
         var event_stats = {};
         var data_plot = [];
         data.map(function(val) {
-          if (val[1].startsWith("N") ||  val[1] == "Oamkry/liigacup" || val[1] == "Oamkry/wcok"){
+          if (val[1].startsWith("N")){
             liig = val[1];
           }
-          else if (val[1].startsWith("O")){
+          else if (val[1].startsWith("O") && !val[1].includes('w') && !val[1].includes('l')){
             liig = "Oamkry";
           }
           else if (val[1].startsWith("K")){
@@ -75,16 +75,7 @@
          });
       Object.keys(event_stats).forEach(key => {
          event_stats[key].sort();
-         if (key == "Oamkry/wcok" || key == "Oamkry/liigacup"){
-           data_plot.push({
-             name: key +" (" + event_stats[key].length + ")",
-             color:event_colors[key],
-             visible: false,
-             data:event_stats[key],
-             //showInLegend: false
-           });
-         }
-         else if (key == "Oamkry"){
+         if (key == "Oamkry"){
            data_plot.push({
               name: key +" (" + event_stats[key].length + ")",
               color:event_colors[key],

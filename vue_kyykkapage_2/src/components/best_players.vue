@@ -1,6 +1,6 @@
 <template lang="html">
   <div>
-    <b-table striped hover :items="litems" :fields="fields" class="font-weight-bold" sort-by="Player_resSum" :sort-desc="sortDesc">
+    <b-table responsive striped hover :items="litems" :fields="fields" class="font-weight-bold" sort-by="Player_resSum" :sort-desc="sortDesc" @row-clicked="Player_selected">
       <template #cell(Event__Name)="data">
         <img v-if="data.item.Event__Name == 'NKL'" src="@/assets/NKL_small.png" width="30"/>
         <img v-else-if="data.item.Event__Name.startsWith('K')" src="@/assets/kyykkaliiga_small.png" width="30"/>
@@ -39,7 +39,6 @@
             headerTitle: "Heittokeskiarvo"
           },
           { key: "Player_posSum",
-            sortable: true,
             label: "HPka",
             formatter:(value, key, item) => {
               return Number((item.Player_posSum/item.Drows_n).toFixed(2));
@@ -63,6 +62,9 @@
         .get('https://pinq.kapsi.fi/DK/api/data/hka_top/' + this.year.value + "/" + this.liig.value)
         .then(response => (this.parse_values(response.data)));
       },
+      Player_selected(items) {
+          this.$emit("set_player_id", items.id);
+        },
     },
     watch: {
       liig: function () {

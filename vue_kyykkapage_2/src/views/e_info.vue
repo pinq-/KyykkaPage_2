@@ -4,7 +4,7 @@
       <b-row>
         <b-col col lg="6">
           <game_modals :selected_game="selected_game"/>
-          <b-card class="font-weight-bold" header="4H kerholaiset" style="overflow:auto">
+          <b-card class="font-weight-bold theme2" header="4H kerholaiset" no-body>
             <fourh :liig="liig" :year="year" v-on="$listeners"/>
           </b-card>
         </b-col>

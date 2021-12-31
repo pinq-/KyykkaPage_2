@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Einfo from '../views/e_info.vue'
+import player from '../views/player.vue'
 
 Vue.use(VueRouter)
 
@@ -17,10 +18,12 @@ const routes = [
   {
     path: '/e_info',
     name: 'Extra info',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: Einfo,
+  },
+  {
+    path: '/player',
+    name: 'Player data',
+    component: player,
   }
 ]
 
