@@ -63,7 +63,7 @@
         .then(response => (this.parse_values(response.data)));
       },
       Player_selected(items) {
-          this.$emit("set_player_id", items.id);
+          this.$router.push({ name: 'Player_data', params: { id : items.id}});
         },
     },
     watch: {

@@ -21,8 +21,8 @@ const routes = [
     component: Einfo,
   },
   {
-    path: '/player',
-    name: 'Player data',
+    path: '/player/:id',
+    name: 'Player_data',
     component: player,
   }
 ]

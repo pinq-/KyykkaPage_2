@@ -57,45 +57,35 @@
         var liig = "-";
         var event_stats = {};
         var data_plot = [];
+        // Make right dir with right keys
         data.map(function(val) {
-          if (val[1].startsWith("N")){
-            liig = val[1];
-          }
-          else if (val[1].startsWith("O") && !val[1].includes('w') && !val[1].includes('l')){
-            liig = "Oamkry";
-          }
-          else if (val[1].startsWith("K")){
-            liig = "Kyykkäliiga";
-          }
-          if (event_stats[liig]  === undefined){
-            event_stats[liig] = [];
-          }
-          //console.log(val)
+          // console.log(event_stats)
+          if (!val[1].includes('wcok') && !val[1].includes('liigacup')){
+            if (val[1].startsWith("N")){
+              liig = val[1];
+            }
+            else if (val[1].startsWith("O")){
+              liig = "Oamkry";
+            }
+            else if (val[1].startsWith("K")){
+              liig = "Kyykkäliiga";
+            }
+            if (event_stats[liig]  === undefined){
+              event_stats[liig] = [];
+              event_stats[liig].push({y:val[0], x:val[2], name:val[3]});
+            }
           event_stats[liig].push({y:val[0], x:val[2], name:val[3]});
+          }
          });
+      // console.log(event_stats);
+      // Set data for highchart
       Object.keys(event_stats).forEach(key => {
          event_stats[key].sort();
-         if (key == "Oamkry"){
-           data_plot.push({
-              name: key +" (" + event_stats[key].length + ")",
-              color:event_colors[key],
-              data:event_stats[key],
-            });
-         }
-         else if (key == "Kyykkäliiga"){
-           data_plot.push({
-              name: key +" (" + event_stats[key].length + ")",
-              color:event_colors[key],
-              data:event_stats[key],
-            });
-         }
-         else {
-           data_plot.push({
-              name: key +" (" + event_stats[key].length + ")",
-              color:event_colors[key],
-              data:event_stats[key],
-            });
-         }
+         data_plot.push({
+            name: key +" (" + event_stats[key].length + ")",
+            color:event_colors[key],
+            data:event_stats[key],
+          });
        });
         this.chartOptions.series = [];
         this.chartOptions.series = data_plot;

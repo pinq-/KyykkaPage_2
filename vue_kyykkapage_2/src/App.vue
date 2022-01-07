@@ -76,8 +76,8 @@
         data() {
             return {
                 year: {
-                    value: 2021,
-                    text: "2021"
+                    value: new Date().getFullYear(),
+                    text: new Date().getFullYear().toString()
                 },
                 liig: {
                     value: "all",
@@ -108,7 +108,8 @@
             }
         },
         mounted() {
-            for (let i = 2021; i >= 2021 - 10; i--) {
+            var this_year = new Date().getFullYear();
+            for (let i = this_year; i >= 2005; i--) {
                 this.options_years.push({
                     value: i,
                     text: String(i)

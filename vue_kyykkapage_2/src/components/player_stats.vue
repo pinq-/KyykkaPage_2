@@ -6,15 +6,13 @@
 </template>
 
 <script>
-  import axios from 'axios'
+  // import axios from 'axios'
 
   export default {
-    props:["liig", "year"],
+    props:['player_data'],
     data(){
       return {
         items: [],
-        player_id: 0,
-        sortDesc: true,
         fields: [
           { key: "Rounds_n", label: "E", headerTitle: "Erät"},
           { key: "Player_resSum", label: "Hka",
@@ -51,29 +49,12 @@
         ]
       }
     },
-    mounted() {
-      this.get_data();
-    },
-    methods: {
-      parse_values(data) {
-        this.items = data[0];
-        //console.log(data[0][0].Name)
-        this.$emit('set_name', data[0][0].Name)
-      },
-      get_data(){
-        axios
-        .get('http://pinq.kapsi.fi/DK/api/data/player/' + this.player_id)
-        .then(response => (this.parse_values(response.data)));
-      },
-    },
     watch: {
-      liig: function () {
-        this.get_data();
+      player_data: function () {
+        this.items = this.player_data;
       },
-      year: function () {
-        this.get_data();
-      },
-    }
+
+    },
   }
 </script>
 
