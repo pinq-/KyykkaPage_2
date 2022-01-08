@@ -108,8 +108,7 @@
             }
         },
         mounted() {
-            var this_year = new Date().getFullYear();
-            for (let i = this_year; i >= 2005; i--) {
+            for (let i = this.year.value; i >= 2005; i--) {
                 this.options_years.push({
                     value: i,
                     text: String(i)
@@ -125,6 +124,7 @@
                 this.liig = option;
             },
             set_game_id(Game_id) {
+                // console.log(Game_id)
                 this.selected_game = Game_id;
             }
         }

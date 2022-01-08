@@ -33,7 +33,7 @@
               },
 
               yAxis: [{
-                  title: { text: 'Oka' },
+                  title: { text: 'Hka' },
               }],
               series: [
               ],

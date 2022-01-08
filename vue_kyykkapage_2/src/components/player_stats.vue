@@ -6,7 +6,6 @@
 </template>
 
 <script>
-  // import axios from 'axios'
 
   export default {
     props:['player_data'],
@@ -15,7 +14,7 @@
         items: [],
         fields: [
           { key: "Rounds_n", label: "E", headerTitle: "Erät"},
-          { key: "Player_resSum", label: "Hka",
+          { key: "Hka", label: "Hka",
             formatter:(value, key, item) => {
               return Number((item.Player_resSum/item.Drows_n).toFixed(2));
             },
@@ -43,6 +42,7 @@
             headerTitle: "Nollaprosentti"
           },
           { key: "Age", label: "Ikä", headerTitle: "Kyykkä kauseja takana"},
+          { key: "Player_resSum", label: "p.", headerTitle: "Piseet"},
           { key: "OFKL_p", label: "OFKL", headerTitle: "OFKL pisteet"},
           { key: "NKL_p", label: "NKL", headerTitle: "NKL pisteet"},
           { key: "4H", label: "4H", headerTitle: "Montako 4 hauuen putkea"},
