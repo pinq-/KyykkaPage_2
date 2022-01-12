@@ -24,6 +24,7 @@
               xAxis: [{
                   //alignTicks: false,
                   title: { text: 'Ottelujen määrä' },
+                  tickInterval: 1,
                   // min: -120,
               },
               ],

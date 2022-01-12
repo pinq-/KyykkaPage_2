@@ -49,7 +49,7 @@
         <b-row>
           <b-col lg="6">
             <b-card no-body class="font-weight-bold theme2" :header=result.Home_team_name :footer-bg-variant = "result.Home_round1 > result.Away_round1 ? 'success': 'danger'">
-              <b-table responsive v-b-tooltip striped hover :items="game_throws[0]" :fields="fields" class="font-weight-bold">
+              <b-table responsive v-b-tooltip striped hover :items="game_throws[0]" :fields="fields" class="font-weight-bold" @row-clicked="Player_selected">
               </b-table>
               <!-- <b-card-footer><em >{{result.Home_round1}} ({{last_throws[0]}})</em></b-card-footer> -->
               <template #footer>
@@ -59,7 +59,7 @@
           </b-col>
           <b-col lg="6">
             <b-card no-body class="font-weight-bold theme2" :header=result.Away_team_name :footer-bg-variant = "result.Home_round1 < result.Away_round1 ? 'success': 'danger'">
-              <b-table responsive v-b-tooltip striped hover :items="game_throws[1]" :fields="fields" class="font-weight-bold">
+              <b-table responsive v-b-tooltip striped hover :items="game_throws[1]" :fields="fields" class="font-weight-bold" @row-clicked="Player_selected">
               </b-table>
               <template #footer>
                 <em>{{result.Away_round1}} ({{last_throws.away[0]}})</em>
@@ -75,7 +75,7 @@
         <b-row>
           <b-col lg="6">
             <b-card no-body class="font-weight-bold theme2" :header=result.Home_team_name :footer-bg-variant = "result.Home_round2 > result.Away_round2 ? 'success': 'danger'">
-              <b-table responsive v-b-tooltip striped hover :items="game_throws[2]" :fields="fields" class="font-weight-bold">
+              <b-table responsive v-b-tooltip striped hover :items="game_throws[2]" :fields="fields" class="font-weight-bold" @row-clicked="Player_selected">
               </b-table>
               <template #footer>
                 <em>{{result.Home_round2}} ({{last_throws.home[1]}})</em>
@@ -84,7 +84,7 @@
           </b-col>
           <b-col lg="6">
             <b-card no-body class="font-weight-bold theme2" :header=result.Away_team_name :footer-bg-variant = "result.Home_round2 < result.Away_round2 ? 'success': 'danger'">
-              <b-table responsive v-b-tooltip striped hover :items="game_throws[3]" :fields="fields" class="font-weight-bold">
+              <b-table responsive v-b-tooltip striped hover :items="game_throws[3]" :fields="fields" class="font-weight-bold" @row-clicked="Player_selected">
               </b-table>
               <template #footer>
                 <em>{{result.Away_round2}} ({{last_throws.away[1]}})</em>
@@ -230,14 +230,17 @@ export default {
     parse_throw(throws){
       var throws_order = ["first", "second", "third", "fourth"], data_throws = [[], [], [], []], last_throws = {home: [], away: []}, teams_hka = {home: [], away: []};
       var team = "-", last_point = "-", order = "home";
-      var team_round = 0, throw_i = 0, throwP = 0;
-      var player = {Player__Name: "-", first: "-", second: "-", third: "-", fourth: "-", yht: 0, Hka: 0};
+      var team_round = 0, throw_n = 0, throwP = 0;
+      var player = {Player__Name: "-", first: "-", second: "-", third: "-", fourth: "-", yht: 0, Hka: 0, id: 0};
       var self = this;
       var throw_names ={home: [["Hauki", 0],["Virkamies", 0],["2", 0], ["4", 0], ["6", 0], ["8", 0], ["10", 0],["12", 0], [">12", 0]], away: [["Hauki", 0],["Virkamies", 0],["2", 0], ["4", 0], ["6", 0], ["8", 0], ["10", 0],["12", 0], [">12", 0]]};
       throws.forEach(function(val){
         // console.log(val);
+        // When the player changes in the json list
         if(player.Player__Name != val.Player__Name){
-          throw_i = 0
+          //Throw order
+          throw_n = 0
+          // When it is not the first time
           if(player.Player__Name != "-"){
             data_throws[team_round].push(player);
             // console.log(table[team_round]);
@@ -255,9 +258,9 @@ export default {
             }
           }
           team = val.Player_team;
-          player = {Player__Name: val.Player__Name, first: "-", second: "-", third: "-", fourth: "-", yht: 0, Hka: 0}
+          player = {Player__Name: val.Player__Name, first: "-", second: "-", third: "-", fourth: "-", yht: 0, Hka: 0, id: val.Player_id}
         }
-        player[throws_order[throw_i]] = val.Throw_points+' ('+-1*val.Kyykkas_left+')';
+        player[throws_order[throw_n]] = val.Throw_points+' ('+-1*val.Kyykkas_left+')';
         if (!isNaN(val.Throw_points)){
           throwP = Number(val.Throw_points);
           player.yht += throwP;
@@ -281,8 +284,8 @@ export default {
           teams_hka[order].push(0)
 
         }
-        throw_i++;
-        player.Hka = Number((player.yht/throw_i).toFixed(2));
+        throw_n++;
+        player.Hka = Number((player.yht/throw_n).toFixed(2));
       });
       last_point = this.get_last_points(player)
       last_throws["away"].push(last_point)
@@ -329,7 +332,10 @@ export default {
       else{
         return "-"
       }
-    }
+    },
+    Player_selected(items) {
+      this.$router.push({ name: 'Player_data', params: { id : items.id}});
+    },
   },
   watch: {
     selected_game: function () {

@@ -124,7 +124,6 @@
                 this.liig = option;
             },
             set_game_id(Game_id) {
-                // console.log(Game_id)
                 this.selected_game = Game_id;
             }
         }

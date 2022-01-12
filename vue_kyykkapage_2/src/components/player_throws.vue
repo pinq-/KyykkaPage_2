@@ -1,6 +1,38 @@
 <template lang="html">
   <div>
-    <b-table v-b-tooltip striped hover :items="items" :fields="fields" class="font-weight-bold" @row-clicked="onRowSelected">
+    <b-table responsive v-b-tooltip small striped hover :items="items" :fields="fields" class="font-weight-bold" @row-clicked="onRowSelected">
+      <template #cell(throw_1) = "data">
+        <b v-if="data.item.throw_1 == data.item.Best_drow">
+          {{ data.item.throw_1 }}
+        </b>
+        <p v-else>
+          {{ data.item.throw_1 }}
+        </p>
+      </template>
+      <template #cell(throw_2) = "data">
+        <b v-if="data.item.throw_2 == data.item.Best_drow">
+          {{ data.item.throw_2 }}
+        </b>
+        <p v-else>
+          {{ data.item.throw_2 }}
+        </p>
+      </template>
+      <template #cell(throw_3) = "data">
+        <b v-if="data.item.throw_3 == data.item.Best_drow">
+          {{ data.item.throw_3 }}
+        </b>
+        <p v-else>
+          {{ data.item.throw_3 }}
+        </p>
+      </template>
+      <template #cell(throw_4) = "data">
+        <b v-if="data.item.throw_4 == data.item.Best_drow">
+          {{ data.item.throw_4 }}
+        </b>
+        <p v-else>
+          {{ data.item.throw_4 }}
+        </p>
+      </template>
     </b-table>
   </div>
 </template>
@@ -23,7 +55,6 @@
           { key: "throw_4", label: "4", headerTitle: "Neljäs heitto"},
           { key: "Throw_sum", label: "Yht.", headerTitle: "Yhteens"},
           { key: "throw_mean", label: "Hka", headerTitle: "Heittokeskiarvo"},
-          { key: "Best_drow", label: "PH", headerTitle: "Paras heitto"},
         ]
       }
     },

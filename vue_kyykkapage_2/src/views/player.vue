@@ -56,12 +56,12 @@
                 player_team : "Pelaajan tiimi",
                 player_data : '',
                 player_round_throws : 'kala',
-                player_hka_stats : 0,
+                player_hka_stats : [],
             }
         },
         mounted() {
             this.get_player_stats();
-            this.get_player_throws();
+            // this.get_player_throws();
         },
         methods: {
             set_name(value){
@@ -71,17 +71,20 @@
                 this.player_data = data[0]
                 this.player_name = data[0][0].Name
                 this.player_team = data[0][0].Sort_name
-                //Parse data from plot
 
-                if (data[1].length){
-                    var hkas = [data[1][data[1].length - 1].Event__Year]; 
-                    hkas.push(Number((data[0][0].Player_resSum / data[0][0].Drows_n).toFixed(2)))
+                //Parse data for plot
+                if (data[1].length){// If there is more years
+                    var hkas = [],
+                    year = [];
+                    hkas.unshift([data[0][0].Event__Name, Number((data[0][0].Player_resSum / data[0][0].Drows_n).toFixed(2))])
+                    year.unshift(this.year.value)
                     data[1].forEach(function(val){
-                        hkas.push(Number((val.Player_resSum / val.Drows_n).toFixed(2)))
+                        hkas.unshift([val.Event__Name, Number((val.Player_resSum / val.Drows_n).toFixed(2))])
+                        year.unshift(val.Event__Year)
                     });
-                    this.player_hka_stats = hkas.reverse()
-                }else{
-                    this.player_hka_stats = [Number((data[0][0].Player_resSum / data[0][0].Drows_n).toFixed(2)),this.year.value];
+                    this.player_hka_stats = [{year: year}, {hka: hkas }];
+                }else{// if this is the first year
+                    this.player_hka_stats = [{year: [this.year.value]}, {hka: [data[0][0].Event__Name, Number((data[0][0].Player_resSum / data[0][0].Drows_n).toFixed(2))] }];
 
                 }
 
@@ -236,5 +239,10 @@
             },
         },
         props: ["year", "liig", "selected_game"],
+        watch: {
+          player_team: function () {
+            this.get_player_throws();
+        },
+    }
     }
 </script>

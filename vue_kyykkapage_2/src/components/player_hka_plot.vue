@@ -15,6 +15,7 @@
         chartOptions: {
               chart: {
                   backgroundColor: '#bcd899',
+                  type: 'line',
               },
               title: {
                   text: ''
@@ -23,7 +24,7 @@
               xAxis: [{
                   //alignTicks: false,
                   title: { text: 'Vuodet' },
-                  tickInterval: 1,
+                  // tickInterval: 1,
 
                   // min: -120,
               },
@@ -42,7 +43,6 @@
                           label: {
                               connectorAllowed: false
                           },
-                          pointStart: 2010
                       }
                   },
           }
@@ -50,17 +50,18 @@
     },
     methods: {
       parse_values(data) {
-        this.chartOptions.plotOptions.series.pointStart = data[data.length - 1];
-        // this.chartOptions.series = data.slice(0,-1);
+        // console.log(data[1].hka)
+        this.chartOptions.xAxis = {categories : data[0].year}
         this.chartOptions.series = {
           name: 'Hka',
-          data: data.slice(0,-1)
+          data: data[1].hka
         }
 
       },
     },
     watch: {
       player_hka_stats: function () {
+        // console.log(this.player_hka_stats)
         this.parse_values(this.player_hka_stats)
         // this.data_plot = this.player_hka_stats;
       },

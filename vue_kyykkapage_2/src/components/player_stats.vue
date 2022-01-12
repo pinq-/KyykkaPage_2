@@ -1,6 +1,6 @@
 <template lang="html">
   <div>
-    <b-table v-b-tooltip striped hover :items="items" :fields="fields" class="font-weight-bold">
+    <b-table responsive v-b-tooltip striped hover :items="items" :fields="fields" class="font-weight-bold">
     </b-table>
   </div>
 </template>
