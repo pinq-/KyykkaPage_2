@@ -16,7 +16,7 @@
                             </b-card>
                         </b-col>                      
                         <b-col>
-                            <b-card class="font-weight-bold theme2" header = 'Muuta jännää' style="overflow:auto" no-body>
+                            <b-card class="font-weight-bold theme2" header = 'Tilastot' style="overflow:auto" no-body>
                                 <player_extra_stats :player_data = "player_data"/>
                             </b-card>
                         </b-col>
@@ -55,7 +55,7 @@
                 player_name : "Pelaajan nimi",
                 player_team : "Pelaajan tiimi",
                 player_data : '',
-                player_round_throws : 'kala',
+                player_round_throws : '-',
                 player_hka_stats : [],
             }
         },

@@ -1,6 +1,6 @@
 <template lang="html">
   <div>
-    <b-table responsive v-b-tooltip striped hover :items="items" :fields="fields" class="font-weight-bold">
+    <b-table stacked responsive v-b-tooltip striped hover :items="items" :fields="fields" class="font-weight-bold">
     </b-table>
   </div>
 </template>
@@ -13,38 +13,19 @@
       return {
         items: [],
         fields: [
-          { key: "Rounds_n", label: "E", headerTitle: "Erät"},
-          { key: "Hka", label: "Hka",
-            formatter:(value, key, item) => {
-              return Number((item.Player_resSum/item.Drows_n).toFixed(2));
-            },
-            headerTitle: "Heittokeskiarvo"},
+          { key: "Rounds_n", label: "Erät", headerTitle: "Erät"},
           { key: "Player_posSum",
-            label: "HPka",
+            label: "Keskimääräinen heittopaikka",
             formatter:(value, key, item) => {
               return Number((item.Player_posSum/item.Drows_n).toFixed(2));
             },
             headerTitle: "Heittopaikkakeskiarvo"
           },
-          { key: "Best_drow", label: "PH", headerTitle: "Paras heitto"},
-          { key: "Hauki_n",
-            label: "H%",
-            formatter:(value, key, item) => {
-              return Number((item.Hauki_n/item.Drows_n).toFixed(2) * 100);
-            },
-            headerTitle: "Haukiprosentti"
-          },          
-          { key: "Nolla_n",
-            label: "N%",
-            formatter:(value, key, item) => {
-              return Number((item.Nolla_n/item.Drows_n).toFixed(2) * 100);
-            },
-            headerTitle: "Nollaprosentti"
-          },
+          { key: "Best_drow", label: "Paras heitto", headerTitle: "Paras heitto"},        
           { key: "Age", label: "Ikä", headerTitle: "Kyykkä kauseja takana"},
-          { key: "Player_resSum", label: "p.", headerTitle: "Piseet"},
-          { key: "OFKL_p", label: "OFKL", headerTitle: "OFKL pisteet"},
-          { key: "NKL_p", label: "NKL", headerTitle: "NKL pisteet"},
+          { key: "Player_resSum", label: "Pisteet", headerTitle: "Piseet"},
+          { key: "OFKL_p", label: "OFKL pisteet", headerTitle: "OFKL pisteet"},
+          { key: "NKL_p", label: "NKL pisteet", headerTitle: "NKL pisteet"},
           { key: "4H", label: "4H", headerTitle: "Montako 4 hauuen putkea"},
         ]
       }
@@ -53,7 +34,6 @@
       player_data: function () {
         this.items = this.player_data;
       },
-
     },
   }
 </script>
