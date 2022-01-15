@@ -111,9 +111,9 @@ import axios from 'axios'
 import moment from 'moment';
 
 export default {
-  props:["selected_game"],
   data(){
     return {
+      selected_game: 0,
       game_throws: [[],[],[],[]],
       result: [],
       last_throws:{home: [0,0], away: [0,0]},
@@ -334,11 +334,14 @@ export default {
       }
     },
     Player_selected(items) {
-      this.$router.push({ name: 'Player_data', params: { id : items.id}});
+      this.$bvModal.hide("modal-1")
+      this.$router.push({ name: 'Player_data', params: { id : items.id}}).catch(()=>{});
     },
   },
   watch: {
-    selected_game: function () {
+    '$store.state.game_modal': function () {
+      // console.log('modal',this.$store.state.player_id)
+      this.selected_game = this.$store.state.player_id
       this.get_data();
     },
   },

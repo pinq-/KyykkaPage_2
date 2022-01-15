@@ -45,7 +45,7 @@
         fields: [
         // format time show it shows only date or hours. if game was doday, then it shows only hours
           { key: "Game_time", formatter: (value) => {
-            if (moment.utc().diff(moment.utc(value), 'days') < 1){
+            if (moment().get('date') - value.substr(8,2)  < 1 && value.substr(5,2) == moment().get('month') + 1){
               if (moment.utc(value).hours() != 0){
                 return moment.utc(value).format('HH:mm')
 
@@ -69,7 +69,8 @@
         this.litems = data;
       },
       onRowSelected(items) {
-          this.$emit("set_game_id", items.id);
+          this.$store.state.player_id = items.id;
+          this.$store.state.game_modal *= -1;
           // console.log(this.$refs.childComponent);
           this.$bvModal.show("modal-1")
           // this.$refs['v-b-modal.modal-1'].show()

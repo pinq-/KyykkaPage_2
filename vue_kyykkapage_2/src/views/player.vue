@@ -26,7 +26,7 @@
             <b-row>
                 <b-col col>
                     <b-card class="font-weight-bold theme2" header = 'Peli tulokset' style="overflow:auto" no-body>
-                        <game_modals :selected_game="selected_game" />
+                        <game_modals />
                         <player_throws :player_round_throws = 'player_round_throws' v-on="$listeners"/>
                     </b-card>
                 </b-col>
@@ -238,11 +238,15 @@
                 .then(response => (this.parse_player_thorws(response.data)));
             },
         },
-        props: ["year", "liig", "selected_game"],
+        props: ["year", "liig"],
         watch: {
-          player_team: function () {
-            this.get_player_throws();
-        },
+            player_team: function () {
+                this.get_player_throws();
+            },          
+            '$route' (){
+                // console.log(to, from)
+                this.get_player_stats();
+            },
     }
     }
 </script>

@@ -5,6 +5,7 @@ import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 import Highcharts from 'highcharts'
 import HighchartsVue from "highcharts-vue";
 import Histogram from 'highcharts/modules/histogram-bellcurve';
+import store from './store'
 
 Histogram(Highcharts)
 import 'bootstrap/dist/css/bootstrap.css'
@@ -19,7 +20,9 @@ Vue.use(HighchartsVue, {
 
 Vue.config.productionTip = false;
 // Vue.prototype.window = window;
+
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount('#app')

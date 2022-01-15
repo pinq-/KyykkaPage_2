@@ -24,7 +24,7 @@
                 </b-row>
             </b-col>
             <b-col lg="3">
-                <game_modals :selected_game="selected_game" />
+                <game_modals/>
                 <b-card class="font-weight-bold m-2 theme2" header="Viimeisimmät pelit"  no-body>
                     <new_games :liig="liig" v-on="$listeners"/>
                 </b-card>
@@ -49,7 +49,7 @@
             best_players,
             game_modals
         },
-        props: ["year", "liig", "selected_game"],
+        props: ["year", "liig"],
     }
 </script>
 <style>

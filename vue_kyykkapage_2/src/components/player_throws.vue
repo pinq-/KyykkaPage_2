@@ -2,43 +2,42 @@
   <div>
     <b-table responsive v-b-tooltip small striped hover :items="items" :fields="fields" class="font-weight-bold" @row-clicked="onRowSelected">
       <template #cell(throw_1) = "data">
-        <b v-if="data.item.throw_1 == data.item.Best_drow">
+        <b v-if="data.item.throw_1 == data.item.Best_drow" class = 'paras theme1' >
           {{ data.item.throw_1 }}
         </b>
-        <p v-else>
+        <b v-else>
           {{ data.item.throw_1 }}
-        </p>
+        </b>
       </template>
       <template #cell(throw_2) = "data">
-        <b v-if="data.item.throw_2 == data.item.Best_drow">
+        <b v-if="data.item.throw_2 == data.item.Best_drow" class = 'paras theme1' >
           {{ data.item.throw_2 }}
         </b>
-        <p v-else>
+        <b v-else>
           {{ data.item.throw_2 }}
-        </p>
+        </b>
       </template>
       <template #cell(throw_3) = "data">
-        <b v-if="data.item.throw_3 == data.item.Best_drow">
+        <b v-if="data.item.throw_3 == data.item.Best_drow" class = 'paras theme1' >
           {{ data.item.throw_3 }}
         </b>
-        <p v-else>
+        <b v-else>
           {{ data.item.throw_3 }}
-        </p>
+        </b>
       </template>
       <template #cell(throw_4) = "data">
-        <b v-if="data.item.throw_4 == data.item.Best_drow">
+        <b v-if="data.item.throw_4 == data.item.Best_drow" class = 'paras theme1' >
           {{ data.item.throw_4 }}
         </b>
-        <p v-else>
+        <b v-else>
           {{ data.item.throw_4 }}
-        </p>
+        </b>
       </template>
     </b-table>
   </div>
 </template>
 
 <script>
-
   export default {
     props:['player_round_throws'],
     data(){
@@ -67,11 +66,11 @@
         // console.log(data)
       },
       onRowSelected(items) {
-        // console.log(items.id)
-        this.$emit("set_game_id", items.id);
-        // // console.log(this.$refs.childComponent);
+        // this.$emit("set_game_id", items.id);
+        this.$store.state.player_id = items.id;
+        this.$store.state.game_modal *= -1;
+        // console.log('player',this.$store.state.player_id)
         this.$bvModal.show("modal-1")
-        // this.$refs['v-b-modal.modal-1'].show()
       },
 
 
@@ -86,4 +85,8 @@
 </script>
 
 <style lang="css">
+  .paras{
+    color: $theme4 !important;
+    border-radius:10px;
+  }
 </style>

@@ -31,7 +31,7 @@
                 </b-container>
             </b-collapse>
         </b-navbar>
-        <router-view :year="year" :liig="liig" :selected_game="selected_game" @set_game_id="set_game_id" />
+        <router-view :year="year" :liig="liig" />
         <div id="nav">
             <b-sidebar id="sidebar-1" bg-variant="dark" title="Valikko" shadow backdrop>
                 <template #default="{ hide }">
@@ -123,9 +123,6 @@
             select_liig(option) {
                 this.liig = option;
             },
-            set_game_id(Game_id) {
-                this.selected_game = Game_id;
-            }
         }
     }
 </script>
