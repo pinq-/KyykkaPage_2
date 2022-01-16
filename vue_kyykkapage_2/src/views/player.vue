@@ -72,19 +72,19 @@
                 this.player_name = data[0][0].Name
                 this.player_team = data[0][0].Sort_name
 
-                //Parse data for plot
+                //Parse data for plot. Hkas and years and different leags
                 if (data[1].length){// If there is more years
                     var hkas = [],
                     year = [];
-                    hkas.unshift([data[0][0].Event__Name, Number((data[0][0].Player_resSum / data[0][0].Drows_n).toFixed(2))])
+                    hkas.unshift([data[0][0].Event__Name, Number((data[0][0].Player_resSum / data[0][0].Drows_n).toFixed(2)), new Date().getFullYear(),])
                     year.unshift(this.year.value)
                     data[1].forEach(function(val){
-                        hkas.unshift([val.Event__Name, Number((val.Player_resSum / val.Drows_n).toFixed(2))])
+                        hkas.unshift([val.Event__Name, Number((val.Player_resSum / val.Drows_n).toFixed(2)), val.Event__Year])
                         year.unshift(val.Event__Year)
                     });
                     this.player_hka_stats = [{year: year}, {hka: hkas }];
                 }else{// if this is the first year
-                    this.player_hka_stats = [{year: [this.year.value]}, {hka: [data[0][0].Event__Name, Number((data[0][0].Player_resSum / data[0][0].Drows_n).toFixed(2))] }];
+                    this.player_hka_stats = [{year: [this.year.value]}, {hka: [data[0][0].Event__Name, Number((data[0][0].Player_resSum / data[0][0].Drows_n).toFixed(2)), new Date().getFullYear(),] }];
 
                 }
 

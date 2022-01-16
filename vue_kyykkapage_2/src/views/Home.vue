@@ -36,7 +36,7 @@
 <script>
     // @ is an alias to /src
     import new_games from '@/components/new_games.vue'
-    import data_plot from '@/components/teams_data_plot.vue'
+    import data_plot from '@/components/home_data_plot.vue'
     import best_teams from '@/components/best_teams.vue'
     import best_players from '@/components/best_players.vue'
     import game_modals from '@/components/game_modals.vue'
