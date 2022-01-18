@@ -62,9 +62,9 @@
     watch: {
       player_data: function () {
         this.items = this.player_data;
-        this.hauki_pro = ((this.player_data[0].Hauki_n/this.player_data[0].Drows_n).toFixed(2) * 100).toString() + '%';
-        this.nolla = Number((this.player_data[0].Nolla_n/this.player_data[0].Drows_n).toFixed(2) * 100);
-        this.hka = Number((this.player_data[0].Player_resSum/this.player_data[0].Drows_n).toFixed(2));
+        this.hauki_pro = ((this.player_data[0].Hauki_n / this.player_data[0].Drows_n).toFixed(2) * 100).toFixed().toString() + '%';
+        this.nolla = Number((this.player_data[0].Nolla_n / this.player_data[0].Drows_n).toFixed(2) * 100).toFixed();
+        this.hka = Number((this.player_data[0].Player_resSum / this.player_data[0].Drows_n).toFixed(2));
       },
     },
     // components: { LogoSVG },

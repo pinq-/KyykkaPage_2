@@ -60,23 +60,25 @@
           "Oamkry/a":"#e5632b",
           "Oamkry/b":"#e5c02b",
           "Oamkry/c":"#ade52b",
-          "NKL": "#ff5722",
+          "NKL": "#e52b2b",
           "Kyykkäliiga": "#022ef4",
           "Kyykkäliiga/liiga": "#022ef4",
           "Kyykkäliiga/pulju": "#02f4c8",
-          "Kyykkäliiga/divar": "#02a8f4",
+          "Kyykkäliiga/divari": "#02a8f4",
         }
-        // console.log(this.groupBy(data[1].hka, 'length'));
         data[0].year = [...new Set(data[0].year)]
         var len = data[0].year.length
+        // Get right keys fill them with null
         data[1].hka.map(function(val) {
           // console.log(len)
+          // console.log(val)
           if (event_stats[val[0]]  === undefined){
             event_stats[val[0]] = new Array(len).fill(null);
           }
         });       
         // console.log('Eka', event_stats, data[0].year)
         var tik = [-1, 0]; // jotta kaikki tulee x-akselilla oikeeseen paikkaan
+        // Set years and result to right column
         data[1].hka.map(function(val) {
           if (tik[1] != val[2]){
             tik[0]++;
@@ -85,6 +87,7 @@
           event_stats[val[0]][tik[0]] = val[1];
         });
         // console.log('valissa asetusta', event_stats)
+        // Set values to highchart
         Object.keys(event_stats).forEach(key => {
          data_plot.push({
             name: key ,
@@ -94,23 +97,10 @@
           });
        });
         // console.log('ennen asetusta', data_plot)
-        // console.log(event_stats);
         this.chartOptions.xAxis = {categories : data[0].year}
         // console.log('pitäisi toimia jo', this.chartOptions.series , data_plot)
         this.chartOptions.series = data_plot
       },
-      groupBy(xs, key) {
-        return xs.reduce(function (rv, x) {
-          let v = key instanceof Function ? key(x) : x[key];
-          let el = rv.find((r) => r && r.key === v); 
-          if (el) {
-            el.values.push(x); 
-          } else { 
-            rv.push({ key: v, values: [x] });
-          } 
-          return rv; 
-        }, []); 
-      }
     },
     watch: {
       player_hka_stats: function () {

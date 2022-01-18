@@ -1,6 +1,6 @@
 <template lang="html">
   <div>
-    <b-table responsive v-b-tooltip small striped hover :items="items" :fields="fields" class="font-weight-bold" @row-clicked="onRowSelected">
+    <b-table responsive v-b-tooltip small striped hover :items="items" :fields="fields" class="font-weight-bold" @row-clicked="onRowCliked">
       <template #cell(throw_1) = "data">
         <b v-if="data.item.throw_1 == data.item.Best_drow" class = 'paras theme1' >
           {{ data.item.throw_1 }}
@@ -65,7 +65,7 @@
         this.items = data;
         // console.log(data)
       },
-      onRowSelected(items) {
+      onRowCliked(items) {
         // this.$emit("set_game_id", items.id);
         this.$store.state.player_id = items.id;
         this.$store.state.game_modal *= -1;

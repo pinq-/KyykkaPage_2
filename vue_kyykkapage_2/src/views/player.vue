@@ -2,32 +2,39 @@
     <div class="home">
         <b-container fluid>
             <b-row>
-                <b-col col>
+                <b-col>
+                    <b-card class="font-weight-bold theme2" :header = 'player_name + " | " + player_team + " | " + player_liig' style="overflow:auto" no-body>
+                        <player_stats :player_data = "player_data" :player_position_means = 'player_position_means'/>
+                    </b-card>
+                </b-col> 
+            </b-row>
+            <b-row>
+                <b-col lg="4">
                     <b-card class="font-weight-bold theme2" header = 'Pelaajan Hka' style="overflow:auto" no-body>
                         <player_hka :player_hka_stats = "player_hka_stats"/>
         
                     </b-card>
                 </b-col>
-                <b-col col>
+                <b-col>
                     <b-row>
-                        <b-col>
-                            <b-card class="font-weight-bold theme2" :header = 'player_name + "  " + player_team' style="overflow:auto" no-body>
-                                <player_stats :player_data = "player_data"/>
-                            </b-card>
-                        </b-col>                      
                         <b-col>
                             <b-card class="font-weight-bold theme2" header = 'Tilastot' style="overflow:auto" no-body>
                                 <player_extra_stats :player_data = "player_data"/>
                             </b-card>
                         </b-col>
                     </b-row>
+                    <b-row>
+                        <b-col>
+                            <b-card class="font-weight-bold theme2" header = 'Poistettujen kyykkien tilasto' style="overflow:auto" no-body>
+                                <player_throw_plot :player_throw_divide_data = 'player_throw_divide_data'/>
+                            </b-card>
+                        </b-col>
+                    </b-row>
                 </b-col>
-            </b-row>
-            <b-row>
-                <b-col col>
+                <b-col>
                     <b-card class="font-weight-bold theme2" header = 'Peli tulokset' style="overflow:auto" no-body>
                         <game_modals />
-                        <player_throws :player_round_throws = 'player_round_throws' v-on="$listeners"/>
+                        <player_throws :player_round_throws = 'player_round_throws'/>
                     </b-card>
                 </b-col>
             </b-row>
@@ -41,6 +48,7 @@
     import player_throws from '@/components/player_throws.vue'
     import game_modals from '@/components/game_modals.vue'
     import player_extra_stats from '@/components/player_extra_stats.vue'
+    import player_throw_plot from '@/components/player_throw_plot.vue'
     export default {
         name: 'Home',
         components: {
@@ -49,14 +57,18 @@
             player_throws,
             game_modals,
             player_extra_stats,
+            player_throw_plot,
         },
         data(){
             return {
                 player_name : "Pelaajan nimi",
                 player_team : "Pelaajan tiimi",
+                player_liig : "Pelaajan liiga",
                 player_data : '',
                 player_round_throws : '-',
-                player_hka_stats : [],
+                player_hka_stats   : [],
+                player_throw_divide_data : [],
+                player_position_means : [],
             }
         },
         mounted() {
@@ -68,23 +80,25 @@
                 this.player_name = value;
             },
             parse_player_stats(data) {
+                // console.log(data)
                 this.player_data = data[0]
                 this.player_name = data[0][0].Name
                 this.player_team = data[0][0].Sort_name
+                this.player_liig = data[0][0].Event__Name
 
                 //Parse data for plot. Hkas and years and different leags
                 if (data[1].length){// If there is more years
                     var hkas = [],
                     year = [];
-                    hkas.unshift([data[0][0].Event__Name, Number((data[0][0].Player_resSum / data[0][0].Drows_n).toFixed(2)), new Date().getFullYear(),])
+                    hkas.unshift([data[0][0].Event__Name, Number((data[0][0].Player_resSum / data[0][0].Drows_n).toFixed(2)), new Date().getFullYear()])
                     year.unshift(this.year.value)
                     data[1].forEach(function(val){
                         hkas.unshift([val.Event__Name, Number((val.Player_resSum / val.Drows_n).toFixed(2)), val.Event__Year])
                         year.unshift(val.Event__Year)
                     });
                     this.player_hka_stats = [{year: year}, {hka: hkas }];
-                }else{// if this is the first year
-                    this.player_hka_stats = [{year: [this.year.value]}, {hka: [data[0][0].Event__Name, Number((data[0][0].Player_resSum / data[0][0].Drows_n).toFixed(2)), new Date().getFullYear(),] }];
+                }else{// if this is the first year 19307
+                    this.player_hka_stats = [{year: [this.year.value]}, {hka: [[data[0][0].Event__Name, Number((data[0][0].Player_resSum / data[0][0].Drows_n).toFixed(2)), new Date().getFullYear()]] }];
 
                 }
 
@@ -98,11 +112,11 @@
                 pointer = 0,
                 game_id = 0;
               player.Best_round = 0;
-              // player.throw_mean1 = 0;
-              // player.throw_mean2 = 0;
-              // player.throw_mean3 = 0;
-              // player.throw_mean4 = 0;
-              // var throw_mean_names = ["throw_mean1", "throw_mean2", "throw_mean3", "throw_mean4"];
+              player.throw_mean1 = 0;
+              player.throw_mean2 = 0;
+              player.throw_mean3 = 0;
+              player.throw_mean4 = 0;
+              var throw_mean_names = ["throw_mean1", "throw_mean2", "throw_mean3", "throw_mean4"];
               var throw_names = ["throw_1", "throw_2", "throw_3", "throw_4"];
               // player.Nolla_pipe = 0;
               var Nolla_pipe = [0,0];
@@ -214,18 +228,21 @@
               });
               // console.log(RoundScore,starts, pointer);
               game_throws.push(round);
-              // $.each(position, function(i,val){
-              //   if(val.length == 0){
-              //     player[throw_mean_names[i]] = 0;
-              //   }else{
-              //     player[throw_mean_names[i]] = Math.round(100*(val.reduce((a, b) => a + b, 0)/val.length))/100 + ",<br/>(" + val.length + ")";
-              //   }
-              // });
+              position.forEach((val, i) =>{
+                if(val.length == 0){
+                  player[throw_mean_names[i]] = 0;
+                }else{
+                  player[throw_mean_names[i]] = Math.round(100*(val.reduce((a, b) => a + b, 0)/val.length))/100 + ",<br/>(" + val.length + ")";
+                }
+              });
               // player.Nolla_pipe = Nolla_pipe[1];
               // player.Hauki_n = Math.round(100 * player.Hauki_n / player.Drows_n);
               // player.Nolla_n = Math.round(100 * player.Nolla_n / player.Drows_n);
               // draw_player_throws(starts,more,less);
+              // console.log(player)
+              // this.player_position_means = player;
               this.player_round_throws = game_throws;
+              this.player_throw_divide_data = [starts, more, less];
             },
             get_player_stats(){
                 axios
@@ -240,7 +257,7 @@
         },
         props: ["year", "liig"],
         watch: {
-            player_team: function () {
+            player_name: function () {
                 this.get_player_throws();
             },          
             '$route' (){
