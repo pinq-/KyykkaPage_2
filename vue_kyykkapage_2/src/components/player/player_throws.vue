@@ -1,6 +1,6 @@
 <template lang="html">
   <div>
-    <b-table responsive v-b-tooltip small striped hover :items="items" :fields="fields" class="font-weight-bold" @row-clicked="onRowCliked">
+    <b-table responsive v-b-tooltip small striped hover :items="items" :fields="fields" class="font-weight-bold" @row-clicked="onRowCliked" :tbody-tr-class="rowClass">
       <template #cell(throw_1) = "data">
         <b v-if="data.item.throw_1 == data.item.Best_drow" class = 'paras theme1' >
           {{ data.item.throw_1 }}
@@ -67,17 +67,21 @@
       },
       onRowCliked(items) {
         // this.$emit("set_game_id", items.id);
-        this.$store.state.player_id = items.id;
+        this.$store.state.game_id = items.id;
         this.$store.state.game_modal *= -1;
         // console.log('player',this.$store.state.player_id)
         this.$bvModal.show("modal-1")
+      },
+      rowClass(item) {
+        if (item.Throw_sum === this.player_round_throws[1]) return 'theme1'
+        if ([item.throw_1, item.throw_2, item.throw_3, item.throw_4].every(element => element === 'h')) return 'table-danger'
       },
 
 
     },
     watch: {
       player_round_throws: function () {
-        this.items = this.player_round_throws;
+        this.items = this.player_round_throws[0];
       },
 
     },

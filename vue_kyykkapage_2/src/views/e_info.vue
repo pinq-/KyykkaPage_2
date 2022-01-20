@@ -3,9 +3,9 @@
     <b-container fluid>
       <b-row>
         <b-col col lg="6">
-          <game_modals :selected_game="selected_game"/>
+          <game_modals/>
           <b-card class="font-weight-bold theme2" header="4H kerholaiset" no-body>
-            <fourh :liig="liig" :year="year" v-on="$listeners"/>
+            <fourh :liig="liig" :year="year"/>
           </b-card>
         </b-col>
       </b-row>
@@ -15,7 +15,7 @@
 
 <script>
 
-import fourh from '@/components/fourh.vue'
+import fourh from '@/components/extra/fourh.vue'
 import game_modals from '@/components/game_modals.vue'
 
 export default {
@@ -24,6 +24,6 @@ export default {
     fourh,
     game_modals
   },
-  props:["year", "liig", "selected_game"],
+  props:["year", "liig"],
 }
 </script>

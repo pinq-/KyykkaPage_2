@@ -69,7 +69,7 @@
         this.litems = data;
       },
       onRowSelected(items) {
-          this.$store.state.player_id = items.id;
+          this.$store.state.game_id = items.id;
           this.$store.state.game_modal *= -1;
           // console.log(this.$refs.childComponent);
           this.$bvModal.show("modal-1")

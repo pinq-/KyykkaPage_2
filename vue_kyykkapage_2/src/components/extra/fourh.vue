@@ -37,6 +37,7 @@
     },
     methods: {
       parse_values(data) {
+        // console.log(data)
         this.litems = data;
       },
       get_data(){
@@ -45,10 +46,10 @@
         .then(response => (this.parse_values(response.data)));
       },
       onRowSelected(items) {
-        // console.log(items[0].Game_id)
-          this.$emit("set_game_id", items.Game_id);
-          this.$bvModal.show("modal-1")
-        },
+        this.$store.state.game_id = items.Game_id;
+        this.$store.state.game_modal *= -1;
+        this.$bvModal.show("modal-1")
+      },
     },
     watch: {
       liig: function () {

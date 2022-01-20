@@ -260,7 +260,7 @@ export default {
           team = val.Player_team;
           player = {Player__Name: val.Player__Name, first: "-", second: "-", third: "-", fourth: "-", yht: 0, Hka: 0, id: val.Player_id}
         }
-        player[throws_order[throw_n]] = val.Throw_points+' ('+-1*val.Kyykkas_left+')';
+        player[throws_order[throw_n]] = val.Throw_points + ' (' + -1 * val.Kyykkas_left + ')';
         if (!isNaN(val.Throw_points)){
           throwP = Number(val.Throw_points);
           player.yht += throwP;
@@ -341,7 +341,7 @@ export default {
   watch: {
     '$store.state.game_modal': function () {
       // console.log('modal',this.$store.state.player_id)
-      this.selected_game = this.$store.state.player_id
+      this.selected_game = this.$store.state.game_id
       this.get_data();
     },
   },
