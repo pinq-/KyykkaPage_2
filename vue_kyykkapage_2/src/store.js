@@ -7,6 +7,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state : {
     game_id: 0,
-    game_modal: 1
+    game_modal: 1,
+    team_id: 0,
   }
 })

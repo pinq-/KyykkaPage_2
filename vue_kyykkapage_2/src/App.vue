@@ -7,6 +7,7 @@
             <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
             <b-collapse id="nav-collapse" is-nav class="h2 font-weight-bold">
                 Ultimate kyykkä tilastot
+                <img src="@/assets/logo.png" width="90" class = 'm-2'/>
                 <b-container class="w-25">
                     <b-col>
                         <b-dropdown :text="year ? year.text : 'Valitse vuosi'">

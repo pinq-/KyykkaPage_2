@@ -1,6 +1,6 @@
 <template lang="html">
   <div>
-    <b-table responsive v-b-tooltip striped hover :items="litems" :fields="fields" class="font-weight-bold" sort-by="Real_Game_mean" :sort-desc="sortDesc">
+    <b-table responsive v-b-tooltip striped hover :items="litems" :fields="fields" class="font-weight-bold" sort-by="Real_Game_mean" :sort-desc="sortDesc"  @row-clicked="Team_selected">
       <template #cell(Event__Name)="data">
         <img v-if="data.item.Event__Name == 'NKL'" src="@/assets/NKL_small.png" width="30"/>
         <img v-else-if="data.item.Event__Name.startsWith('K')" src="@/assets/kyykkaliiga_small.png" width="30"/>
@@ -46,6 +46,10 @@
         .get('https://pinq.kapsi.fi/DK/api/data/teams_top/' + this.year.value + "/" + this.liig.value)
         .then(response => (this.parse_values(response.data)));
       },
+      Team_selected(items) {
+        // console.log(items.id)
+          this.$router.push({ name: 'Team_data', params: { id : items.id}});
+        },
     },
     watch: {
       liig: function () {

@@ -50,7 +50,7 @@
     },
     methods: {
       parse_values(data) {
-        // console.log(data[0].year)
+        // console.log(data)
         var event_stats = {};
         var data_plot = [];
         var event_colors ={

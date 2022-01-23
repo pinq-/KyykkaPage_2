@@ -3,6 +3,18 @@
     <b-container class="bv-example-row">
       <b-row>
         <b-col>
+            Heittokeskiarvo: {{ hka }} p
+        </b-col>
+      </b-row>     
+      <b-row>
+        <b-col>
+           <svg v-for='index in bar_size' :key='index' class='progressbar'>
+              <rect width="25" height="40" :fill = "getColor(index)" stroke= "rgb(0,0,0)"/>
+            </svg>
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col>
           <span class='hauki_pro'>
           <svg version="1.1" class="hauki" >
             <defs>
@@ -27,16 +39,7 @@
               </b-progress-bar>
             </b-progress>
         </b-col>
-      </b-row>
-      <b-row>
-        <b-col>
-            <b-progress variant="success" max = 9 show-value class="mb-3">
-              <b-progress-bar :value="hka">
-                <span class="text-dark">Hka: <strong>{{ hka }}</strong></span>
-              </b-progress-bar>
-            </b-progress>
-        </b-col>
-      </b-row>
+      </b-row>    
     </b-container>
   </div>
 </template>
@@ -53,11 +56,21 @@
         hauki_pro : "0%",
         hka: 0,
         nolla: 0,
+        bar_size: 18,
+        bar_max: 8.5,
       }
     },
     mounted() {
     },
     methods: {
+      getColor(index){
+        if (index < this.hka / this.bar_max * this.bar_size){
+          // console.log(index,this.hka)
+        return 'rgb(' + (255 - (Math.floor(index / ((this.bar_size / 2) + 1)) * (index - (this.bar_size / 2)) / (this.bar_size / 2) * 255 )) + ',' + (index / (this.bar_size / 2) * Math.floor((this.bar_size - index) / (this.bar_size / 2)) * 255 + 255 * Math.floor(index / ((this.bar_size / 2) + 1))) + ',0)'
+        }else{
+          return 'rgb(150, 150, 150)'
+        }
+      }
     },
     watch: {
       player_data: function () {
@@ -86,4 +99,11 @@
     width: 90%;
     color: black;
  }
+  .progressbar {
+    /*position: absolute;*/
+    float: left;
+    width: 30px !important;;
+    height: 60px;
+    display: block;
+  }
 </style>

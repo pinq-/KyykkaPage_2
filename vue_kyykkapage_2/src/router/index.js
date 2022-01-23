@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Einfo from '../views/e_info.vue'
 import player from '../views/player.vue'
+import teams from '../views/teams.vue'
 
 Vue.use(VueRouter)
 
@@ -24,6 +25,11 @@ const routes = [
     path: '/player/:id',
     name: 'Player_data',
     component: player,
+  },  
+  {
+    path: '/teams/:id',
+    name: 'Team_data',
+    component: teams,
   }
 ]
 

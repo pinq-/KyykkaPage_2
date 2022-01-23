@@ -8,7 +8,7 @@
 <script>
 
   export default {
-    props:['player_data', 'player_position_means'],
+    props:['player_data'],
     data(){
       return {
         items: [],

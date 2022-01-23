@@ -61,10 +61,6 @@
       // this.get_data();
     },
     methods: {
-      parse_values(data) {
-        this.items = data;
-        // console.log(data)
-      },
       onRowCliked(items) {
         // this.$emit("set_game_id", items.id);
         this.$store.state.game_id = items.id;

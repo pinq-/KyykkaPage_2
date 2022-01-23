@@ -38,7 +38,7 @@
               series: [],
               tooltip: {
                       headerFormat: '<b>{point.key}</b><br>',
-                      pointFormat: '{point.y} Oka, {point.x} O'
+                      pointFormat: 'Oka: {point.y}, Ottelut: {point.x}'
                   }
           }
       }

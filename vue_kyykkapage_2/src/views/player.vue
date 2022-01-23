@@ -3,7 +3,7 @@
         <b-container fluid>
             <b-row>
                 <b-col>
-                    <b-card class="font-weight-bold theme2" :header = 'player_name + " | " + player_team + " | " + player_liig' style="overflow:auto" no-body>
+                    <b-card class="font-weight-bold theme2" :header = 'player_name + " -------- " + player_team + " --------- " + player_liig' style="overflow:auto" no-body>
                         <player_stats :player_data = "player_data"/>
                     </b-card>
                 </b-col> 
@@ -89,16 +89,16 @@
                 //Parse data for plot. Hkas and years and different leags
                 if (data[1].length){// If there is more years
                     var hkas = [],
-                    year = [];
-                    hkas.unshift([data[0][0].Event__Name, Number((data[0][0].Player_resSum / data[0][0].Drows_n).toFixed(2)), new Date().getFullYear()])
-                    year.unshift(this.year.value)
+                    year = []; // for x-axis tiks
+                    hkas.unshift([data[0][0].Event__Name, Number((data[0][0].Player_resSum / data[0][0].Drows_n).toFixed(2)), data[0][0].Event__Year])
+                    year.unshift(data[0][0].Event__Year)
                     data[1].forEach(function(val){
                         hkas.unshift([val.Event__Name, Number((val.Player_resSum / val.Drows_n).toFixed(2)), val.Event__Year])
                         year.unshift(val.Event__Year)
                     });
                     this.player_hka_stats = [{year: year}, {hka: hkas }];
-                }else{// if this is the first year 19307
-                    this.player_hka_stats = [{year: [this.year.value]}, {hka: [[data[0][0].Event__Name, Number((data[0][0].Player_resSum / data[0][0].Drows_n).toFixed(2)), new Date().getFullYear()]] }];
+                }else{// if this is the first year
+                    this.player_hka_stats = [{year: [this.year.value]}, {hka: [[data[0][0].Event__Name, Number((data[0][0].Player_resSum / data[0][0].Drows_n).toFixed(2)), data[0][0].Event__Year]] }];
 
                 }
 
@@ -222,7 +222,7 @@
                 if(val.length == 0){
                     player[throw_mean_names[i]] = 0;
                 }else{
-                    player[throw_mean_names[i]] = Math.round(100*(val.reduce((a, b) => a + b, 0)/val.length))/100 + " (" + val.length + ")";
+                    player[throw_mean_names[i]] = Math.round(100*(val.reduce((a, b) => a + b, 0)/val.length))/100 + " p (" + val.length + ")";
                 }
             });
             // console.log(player)
@@ -255,6 +255,6 @@
                 // console.log(to, from)
                 this.get_player_stats();
             },
-    }
+        }
     }
 </script>
