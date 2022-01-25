@@ -47,7 +47,7 @@
     import player_hka from '@/components/player/player_hka_plot.vue'
     import player_throws from '@/components/player/player_throws.vue'
     import game_modals from '@/components/game_modals.vue'
-    import player_extra_stats from '@/components/player/player_extra_stats.vue'
+    import player_extra_stats from '@/components/player/player_bars.vue'
     import player_throw_plot from '@/components/player/player_throw_plot.vue'
     export default {
         name: 'Home',

@@ -16,7 +16,7 @@
           { key: "Rounds_n", label: "Erät", headerTitle: "Erät"},
           { key: "Age", label: "Ikä", headerTitle: "Kyykkä kauseja takana"},
           { key: "Player_posSum",
-            label: "HPke",
+            label: "HPka",
             formatter:(value, key, item) => {
               return Number((item.Player_posSum/item.Drows_n).toFixed(2));
             },

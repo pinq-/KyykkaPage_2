@@ -52,7 +52,25 @@ import axios from 'axios'
             sortByFormatted: true,
             headerTitle: "Nolla pistettä prosentti"
           },
-          { key: "Age", label: "Ikä"},
+          { key: "OFKL_p", label: "OFKL p", sortable: true},
+          { key: "OFKLka",
+            sortable: true,
+            formatter:(value, key, item) => {
+              return Number((item.OFKL_p / item.Drows_n).toFixed(2));
+            },
+            sortByFormatted: true,
+            headerTitle: "OFKL keskiarvo"
+          },
+          { key: "NKL_p", label: "NKL p", sortable: true},
+          { key: "NKLka",
+            sortable: true,
+            formatter:(value, key, item) => {
+              return Number((item.NKL_p / item.Drows_n).toFixed(2));
+            },
+            sortByFormatted: true,
+            headerTitle: "NKL keskiarvo"
+          },
+          { key: "Age", label: "Ikä", sortable: true},
         ]
       }
     },
