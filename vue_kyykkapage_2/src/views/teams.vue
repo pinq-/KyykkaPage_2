@@ -21,6 +21,13 @@
           </b-card>
         </b-col>
       </b-row>
+      <b-row>
+        <b-col>
+          <b-card class="font-weight-bold theme2" style="overflow:auto" header = 'Pelit' no-body>
+            <team_game_plot :team_data = "team_data"/>
+          </b-card>
+        </b-col>
+      </b-row>
     </b-container>
   </div>
 </template>
@@ -31,6 +38,7 @@ import game_modals from '@/components/game_modals.vue'
 import teams_stats from '@/components/teams/team_stats.vue'
 import teams_hka_plot from '@/components/teams/team_hka_plot.vue'
 import team_players from '@/components/teams/team_players.vue'
+import team_game_plot from '@/components/teams/team_game_plot.vue'
 import axios from 'axios'
 
 export default {
@@ -39,7 +47,8 @@ export default {
     game_modals,
     teams_stats,
     teams_hka_plot,
-    team_players
+    team_players,
+    team_game_plot
   },
   props:["year", "liig"],
   data(){
@@ -61,6 +70,7 @@ export default {
     },
     parse_team_stats(data){
       this.team_name = data[0].Team_short_name
+      this.$store.state.team_name_short = data[0].Team_short_name
       this.team_name_full = data[0].Team_full_name
       this.team_liig = data[0].Event_name
       data[0]['Kokemus'] = data.length

@@ -15,7 +15,7 @@
         fields: [
           { key: "Games_n", label: "O", headerTitle: "Ottelut"},
           { key: "Game_mean",
-            label: "Oke",
+            label: "Oka",
             formatter:(value, key, item) => {
               return Number((item.Game_mean/item.Games_n).toFixed(2));
             },

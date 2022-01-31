@@ -33,6 +33,22 @@ import axios from 'axios'
             sortByFormatted: true,
             headerTitle: "Heittokeskiarvo"
           },
+          { key: "OFKLka",
+            sortable: true,
+            formatter:(value, key, item) => {
+              return Number((item.OFKL_p / item.Drows_n).toFixed(2));
+            },
+            sortByFormatted: true,
+            headerTitle: "OFKL keskiarvo"
+          },
+          { key: "NKLka",
+            sortable: true,
+            formatter:(value, key, item) => {
+              return Number((item.NKL_p / item.Drows_n).toFixed(2));
+            },
+            sortByFormatted: true,
+            headerTitle: "NKL keskiarvo"
+          },
           { key: "Best_drow", sortable: true, label: "Parasheitto"},
           { key: "Hauki_n",
             sortable: true,
@@ -51,24 +67,6 @@ import axios from 'axios'
             },
             sortByFormatted: true,
             headerTitle: "Nolla pistettä prosentti"
-          },
-          { key: "OFKL_p", label: "OFKL p", sortable: true},
-          { key: "OFKLka",
-            sortable: true,
-            formatter:(value, key, item) => {
-              return Number((item.OFKL_p / item.Drows_n).toFixed(2));
-            },
-            sortByFormatted: true,
-            headerTitle: "OFKL keskiarvo"
-          },
-          { key: "NKL_p", label: "NKL p", sortable: true},
-          { key: "NKLka",
-            sortable: true,
-            formatter:(value, key, item) => {
-              return Number((item.NKL_p / item.Drows_n).toFixed(2));
-            },
-            sortByFormatted: true,
-            headerTitle: "NKL keskiarvo"
           },
           { key: "Age", label: "Ikä", sortable: true},
         ]
