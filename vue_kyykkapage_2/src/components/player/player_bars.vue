@@ -9,9 +9,75 @@
       <b-row>
         <b-col>
             <svg class="progressbar" viewBox="10 0 340 30">
-              <rect v-for='index in bar_size' :key='index' width="15" height="25" :x = 'index * 18' :fill = "getColor_hka(index)" stroke= "rgb(10,10,10)"/>
+              <rect v-for='index in bar_size' :key='index' width="15" height="25" :x = 'index * 18' :fill = "getColor_hka(index, 0)" stroke= "rgb(10,10,10)"/>
             </svg>
+        <b-button v-if= 'myToggle' v-b-toggle.collapse-1 :pressed.sync="myToggle" variant="primary" >▼</b-button>        
+        <b-button v-if= 'myToggle == false' v-b-toggle.collapse-1 :pressed.sync="myToggle" variant="primary" >▲</b-button>
         </b-col>
+      </b-row>
+      <b-row>
+        <b-collapse id="collapse-1">
+          <b-row class='m-0'>
+            <b-col>
+              {{ throws[0] }}
+            </b-col>
+          </b-row>
+          <b-row class='m-0'>
+            <b-col sm='1' class='mr-0 p-0'>
+              1.
+            </b-col>
+            <b-col class='p-0'>
+            <svg class="progressbar" viewBox="10 0 340 30">
+              <rect v-for='index in bar_size' :key='index' width="15" height="25" :x = 'index * 18' :fill = "getColor_hka(index, 1)" stroke= "rgb(10,10,10)"/>
+            </svg>
+            </b-col>
+          </b-row>
+          <b-row class='m-0'>
+            <b-col>
+              {{ throws[1] }}
+            </b-col>
+          </b-row>
+          <b-row class='m-0'>
+            <b-col sm='1' class='mr-0 p-0'>
+              2.
+            </b-col>
+            <b-col class='p-0'>
+            <svg class="progressbar" viewBox="10 0 340 30">
+              <rect v-for='index in bar_size' :key='index' width="15" height="25" :x = 'index * 18' :fill = "getColor_hka(index, 2)" stroke= "rgb(10,10,10)"/>
+            </svg>
+            </b-col>
+          </b-row>
+          <b-row class='m-0'>
+            <b-col>
+              {{ throws[2] }}
+            </b-col>
+          </b-row>
+          <b-row class='m-0'>
+            <b-col sm='1' class='mr-0 p-0'>
+              3.
+            </b-col>
+            <b-col class='p-0'>
+            <svg class="progressbar" viewBox="10 0 340 30">
+              <rect v-for='index in bar_size' :key='index' width="15" height="25" :x = 'index * 18' :fill = "getColor_hka(index, 3)" stroke= "rgb(10,10,10)"/>
+            </svg>
+            </b-col>
+          </b-row>
+          <b-row class='m-0'>
+            <b-col>
+              {{ throws[3] }}
+            </b-col>
+          </b-row>
+          <b-row class='m-0'>
+            <b-col sm='1' class='mr-0 p-0'>
+                4.
+            </b-col>
+            <b-col class='p-0'>
+            <svg class="progressbar" viewBox="10 0 340 30">
+              <rect v-for='index in bar_size' :key='index' width="15" height="25" :x = 'index * 18' :fill = "getColor_hka(index, 4)" stroke= "rgb(10,10,10)"/>
+            </svg>
+            </b-col>
+          </b-row>
+        </b-collapse>
       </b-row>
       <b-row>
         <b-col>
@@ -57,13 +123,26 @@
         nolla: 0,
         bar_size: 18,
         hka_max: 8.5,
+        throws: [0, 0, 0, 0],
+        myToggle: true,
       }
     },
     mounted() {
     },
     methods: {
-      getColor_hka(index){
-        if (index < this.hka / this.hka_max * this.bar_size){
+      getColor_hka(index, val){
+        let hka = 0
+        if (val == 0){
+          hka = this.hka
+        }else{
+          // console.log(this.throws[val - 1], val)
+          if (this.throws[val - 1] == '0'){
+            hka = 0
+          }else{
+            hka = Number(this.throws[val - 1].split(" ", 1)[0]);
+          }
+        }
+        if (index < hka / this.hka_max * this.bar_size){
           // console.log(index,this.hka)
           return 'rgb(' + (255 - (Math.floor(index / ((this.bar_size / 2) + 1)) * (index - (this.bar_size / 2)) / (this.bar_size / 2) * 255 )) + ',' + (index / (this.bar_size / 2) * Math.floor((this.bar_size - index) / (this.bar_size / 2)) * 255 + 255 * Math.floor(index / ((this.bar_size / 2) + 1))) + ',0)'
         }else{
@@ -81,10 +160,10 @@
     },
     watch: {
       player_data: function () {
-        this.items = this.player_data;
         this.hauki_pro = ((this.player_data[0].Hauki_n / this.player_data[0].Drows_n).toFixed(2) * 100).toFixed().toString() + '%';
         this.nolla = Number((this.player_data[0].Nolla_n / this.player_data[0].Drows_n).toFixed(2) * 100).toFixed();
         this.hka = Number((this.player_data[0].Player_resSum / this.player_data[0].Drows_n).toFixed(2));
+        this.throws = [this.player_data[0]['throw_mean1'], this.player_data[0]['throw_mean2'], this.player_data[0]['throw_mean3'], this.player_data[0]['throw_mean4']]
       },
     },
     // components: { LogoSVG },
@@ -107,6 +186,14 @@
     /*position: absolute;*/
     float: left;
     width: 100% !important;
+    /*height: 60px;*/
+    display: block;
+  }
+  .progressbar_e {
+    /*position: absolute;*/
+    float: left;
+    width: 80% !important;
+    /*margin: 0 !important;*/
     /*height: 60px;*/
     display: block;
   }
