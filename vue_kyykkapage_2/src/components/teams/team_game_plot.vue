@@ -1,4 +1,4 @@
-<template lang="html">
+p<template lang="html">
   <div>
     <highcharts :options="chartOptions"></highcharts>
   </div>
@@ -10,7 +10,102 @@
 
   export default {
     props : ["player_throw_divide_data"],
-    data(){
+    mounted() {
+      this.get_data();
+    },
+    methods: {
+      open_game_stats(game_id) {
+        // console.log(tama)
+        this.$store.state.game_id = game_id;
+        this.$store.state.game_modal *= -1;
+        this.$bvModal.show("modal-1")
+      },
+      parse_values(data) {
+        // console.log(data)
+        let home_games = []
+        let away_games = []
+        let wheter_temp = []
+        let wheter_snow = []
+        data.forEach((value) => {
+          let h_game = {name:this.$store.state.team_name_short,  time:0, y:0 ,color : '-', opponent: '-', game_id: 0}
+          let a_game = {y:0 ,color : 'rgba(112,112,112, 0.5)', game_id: 0}
+          if(value.Home_team__Team__Sort_name == this.$store.state.team_name_short){
+              if (value.Home_result > value.Away_result){
+                h_game['color'] = "#A7EE50";
+              }
+              else if(value.Home_result < value.Away_result){
+                h_game['color'] = "#ef5350";
+              }else{
+                h_game['color'] = "#707070";
+              }
+              h_game['y'] = value.Home_result;
+              a_game['y'] = value.Away_result;
+              h_game['opponent'] = value.Away_team__Team__Sort_name;
+          }
+          else if(value.Away_team__Team__Sort_name == this.$store.state.team_name_short){
+              if (value.Home_result < value.Away_result){
+                h_game['color'] = "#A7EE50";
+              }
+              else if(value.Home_result > value.Away_result){
+                h_game['color'] = "#ef5350";
+              }else{
+                h_game['color'] = "#707070";
+              }
+              h_game['opponent'] = value.Home_team__Team__Sort_name;
+              h_game['y'] = value.Away_result;
+              a_game['y'] = value.Home_result;
+          }
+          h_game['time'] = moment.utc(value.Game_time).format('DD.MM');
+          h_game['game_id'] = value.id;
+          a_game['game_id'] = value.id;
+          home_games.push(h_game);
+          away_games.push(a_game);
+          wheter_temp.push(value.Game_weather__Temp_day);
+          wheter_snow.push(value.Game_weather__Snow_deph);
+        });
+        this.chartOptions.series = [
+        {
+          type: 'column',
+          name: 'vastustaja',
+          data:away_games,
+          pointPadding: 0.2,
+          yAxis:0,
+
+          },
+        { 
+          type: 'column',
+          name: 'omat pelit',
+          data:home_games,
+          pointPadding: 0.3,
+          yAxis:0,
+        },        
+        { 
+          type: 'spline',
+          name: 'Lämpötila',
+          data:wheter_temp,
+          pointPadding: 0.3,
+          yAxis:2,
+          color:'#0277bd',
+        },        
+        { 
+          type: 'column',
+          name: 'Lumen syvyys',
+          data:wheter_snow,
+          pointPadding: 0.3,
+          yAxis:1,
+          color:'#1eb0e6',
+        },
+
+        ]
+  
+      },
+      get_data(){
+        axios
+        .get('https://pinq.kapsi.fi/DK/api/data/games/' + this.$store.state.team_id)
+        .then(response => (this.parse_values(response.data)));
+      },
+    },
+        data(){
       return {
         chartOptions: {
               chart: {
@@ -95,16 +190,16 @@
                           label: {
                               connectorAllowed: false
                           },
-                          // cursor: 'pointer',
-                        //   point: {
-                        //     events: {
-                        //       click: function () {
-                        //         // this.Cliked(this);
-                        //         app.$options.methods.Cliked(this);
+                          cursor: 'pointer',
+                          point: {
+                            events: {
+                              click: (point_stats) => {
+                                // console.log(point_stats.point.game_id);
+                                this.open_game_stats(point_stats.point.game_id);
 
-                        //     },
-                        //   },
-                        // },
+                            },
+                          },
+                        },
                       },
                       column: {
                         // stacking: 'normal',
@@ -115,99 +210,6 @@
                   },
           }
       }
-    },
-    mounted() {
-      this.get_data();
-    },
-    methods: {
-      parse_values(data) {
-        // console.log(data)
-        let home_games = []
-        let away_games = []
-        let wheter_temp = []
-        let wheter_snow = []
-        data.forEach((value) => {
-          let h_game = {name:this.$store.state.team_name_short,  time:0, y:0 ,color : '-', opponent: '-', id: 0}
-          let a_game = {y:0 ,color : 'rgba(112,112,112, 0.5)'}
-          if(value.Home_team__Team__Sort_name == this.$store.state.team_name_short){
-              if (value.Home_result > value.Away_result){
-                h_game['color'] = "#A7EE50";
-              }
-              else if(value.Home_result < value.Away_result){
-                h_game['color'] = "#ef5350";
-              }else{
-                h_game['color'] = "#707070";
-              }
-              h_game['y'] = value.Home_result;
-              a_game['y'] = value.Away_result;
-              h_game['opponent'] = value.Away_team__Team__Sort_name;
-          }
-          else if(value.Away_team__Team__Sort_name == this.$store.state.team_name_short){
-              if (value.Home_result < value.Away_result){
-                h_game['color'] = "#A7EE50";
-              }
-              else if(value.Home_result > value.Away_result){
-                h_game['color'] = "#ef5350";
-              }else{
-                h_game['color'] = "#707070";
-              }
-              h_game['opponent'] = value.Home_team__Team__Sort_name;
-              h_game['y'] = value.Away_result;
-              a_game['y'] = value.Home_result;
-          }
-          h_game['time'] = moment.utc(value.Game_time).format('DD.MM');
-          h_game['id'] = value.id;
-          home_games.push(h_game);
-          away_games.push(a_game);
-          wheter_temp.push(value.Game_weather__Temp_day);
-          wheter_snow.push(value.Game_weather__Snow_deph);
-        });
-        this.chartOptions.series = [
-        {
-          type: 'column',
-          name: 'toiset',
-          data:away_games,
-          pointPadding: 0.2,
-          yAxis:0,
-
-          },
-        { 
-          type: 'column',
-          name: 'pelit',
-          data:home_games,
-          pointPadding: 0.3,
-          yAxis:0,
-        },        
-        { 
-          type: 'spline',
-          name: 'Lämpötila',
-          data:wheter_temp,
-          pointPadding: 0.3,
-          yAxis:2,
-          color:'#0277bd',
-        },        
-        { 
-          type: 'column',
-          name: 'Lumen syvyys',
-          data:wheter_snow,
-          pointPadding: 0.3,
-          yAxis:1,
-          color:'#1eb0e6',
-        },
-
-        ]
-  
-      },
-      Cliked: function(items) {
-        this.$store.state.game_id = items.id;
-        this.$store.state.game_modal *= -1;
-        this.$bvModal.show("modal-1")
-      },
-      get_data(){
-        axios
-        .get('https://pinq.kapsi.fi/DK/api/data/games/' + this.$store.state.team_id)
-        .then(response => (this.parse_values(response.data)));
-      },
     },
     watch: {
       '$store.state.team_id': function () {

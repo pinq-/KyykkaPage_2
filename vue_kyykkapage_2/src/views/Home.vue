@@ -25,7 +25,7 @@
             </b-col>
             <b-col lg="3">
                 <game_modals/>
-                <b-card class="font-weight-bold m-2 theme2" header="Viimeisimmät pelit"  no-body>
+                <b-card class="font-weight-bold mt-2 theme2" header="Viimeisimmät pelit"  no-body>
                     <new_games :liig="liig" v-on="$listeners"/>
                 </b-card>
             </b-col>

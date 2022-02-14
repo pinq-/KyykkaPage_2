@@ -3,11 +3,11 @@
     <b-modal id="modal-1" size="xl" body-bg-variant="dark" header-class="darker" footer-class="darker">
       <template #modal-header="{ close }">
         <b-container fluid >
-          <b-row class=" font-weight-bold text-center" style="font-size: 1.6rem;">
-            <b-col class="rounded" :class="{'bg-success': result.Home_result > result.Away_result, 'bg-danger': result.Home_result < result.Away_result, 'bg-secondary': result.Home_result == result.Away_result}">
+          <b-row class="justify-content-md-center font-weight-bold text-center" style="font-size: 1.6rem;">
+            <b-col lg='1' md="auto" class="rounded" :class="{'bg-success': result.Home_result > result.Away_result, 'bg-danger': result.Home_result < result.Away_result, 'bg-secondary': result.Home_result == result.Away_result}">
               {{result.Home_result}}
             </b-col>
-            <b-col style="font-size: 2.25rem;" lg="8">
+            <b-col style="font-size: 2.25rem;" md="auto">
               <span style=" color:#E0D338;">
                 {{result.Home_team_name}}
               </span>
@@ -18,7 +18,7 @@
                 {{result.Away_team_name}}
               </span>
             </b-col>
-            <b-col class="rounded" :class="{'bg-success': result.Home_result < result.Away_result, 'bg-danger': result.Home_result > result.Away_result, 'bg-secondary': result.Home_result == result.Away_result}">
+            <b-col md="auto" class="rounded" :class="{'bg-success': result.Home_result < result.Away_result, 'bg-danger': result.Home_result > result.Away_result, 'bg-secondary': result.Home_result == result.Away_result}">
               {{result.Away_result}}
             </b-col>
           </b-row>
@@ -33,10 +33,10 @@
         </b-button>
       </template>
       <b-container fluid class="text-center">
-        <b-row>
-          <b-col>
+        <b-row class="justify-content-md-center">
+          <b-col lg="8" md="auto" >
              <b-card class="font-weight-bold m-2 theme2"  no-body>
-            <b-table responsive v-b-tooltip striped :items="[result]" :fields="fields_info" class="font-weight-bold text-light">
+            <b-table responsive small v-b-tooltip striped :items="[result]" :fields="fields_info" class="font-weight-bold text-light">
             </b-table>
           </b-card>
           </b-col>
@@ -50,8 +50,23 @@
           <b-col lg="6">
             <b-card no-body class="font-weight-bold theme2" :header=result.Home_team_name :footer-bg-variant = "result.Home_round1 > result.Away_round1 ? 'success': 'danger'">
               <b-table responsive v-b-tooltip striped hover :items="game_throws[0]" :fields="fields" class="font-weight-bold" @row-clicked="Player_selected">
+                <template #cell(first)="data">
+                  {{data.item.first}}
+                  <span style="font-size: 0.7rem; color:grey">/{{data.item.first_left}}</span>
+                </template>
+                <template #cell(second)="data">
+                  {{data.item.second}}
+                  <span style="font-size: 0.7rem; color:grey">/{{data.item.second_left}}</span>
+                </template>
+                <template #cell(third)="data">
+                  {{data.item.third}}
+                  <span style="font-size: 0.7rem; color:grey">/{{data.item.third_left}}</span>
+                </template>              
+                <template #cell(fourth)="data">
+                  {{data.item.fourth}}
+                  <span style="font-size: 0.7rem; color:grey">/{{data.item.fourth_left}}</span>
+                </template>
               </b-table>
-              <!-- <b-card-footer><em >{{result.Home_round1}} ({{last_throws[0]}})</em></b-card-footer> -->
               <template #footer>
                 <em >{{result.Home_round1}} ({{last_throws.home[0]}})</em>
               </template>
@@ -60,6 +75,22 @@
           <b-col lg="6">
             <b-card no-body class="font-weight-bold theme2" :header=result.Away_team_name :footer-bg-variant = "result.Home_round1 < result.Away_round1 ? 'success': 'danger'">
               <b-table responsive v-b-tooltip striped hover :items="game_throws[1]" :fields="fields" class="font-weight-bold" @row-clicked="Player_selected">
+                <template #cell(first)="data">
+                  {{data.item.first}}
+                  <span style="font-size: 0.7rem; color:grey">/{{data.item.first_left}}</span>
+                </template>
+                <template #cell(second)="data">
+                  {{data.item.second}}
+                  <span style="font-size: 0.7rem; color:grey">/{{data.item.second_left}}</span>
+                </template>
+                <template #cell(third)="data">
+                  {{data.item.third}}
+                  <span style="font-size: 0.7rem; color:grey">/{{data.item.third_left}}</span>
+                </template>              
+                <template #cell(fourth)="data">
+                  {{data.item.fourth}}
+                  <span style="font-size: 0.7rem; color:grey">/{{data.item.fourth_left}}</span>
+                </template>
               </b-table>
               <template #footer>
                 <em>{{result.Away_round1}} ({{last_throws.away[0]}})</em>
@@ -76,6 +107,22 @@
           <b-col lg="6">
             <b-card no-body class="font-weight-bold theme2" :header=result.Home_team_name :footer-bg-variant = "result.Home_round2 > result.Away_round2 ? 'success': 'danger'">
               <b-table responsive v-b-tooltip striped hover :items="game_throws[2]" :fields="fields" class="font-weight-bold" @row-clicked="Player_selected">
+                <template #cell(first)="data">
+                  {{data.item.first}}
+                  <span style="font-size: 0.7rem; color:grey">/{{data.item.first_left}}</span>
+                </template>
+                <template #cell(second)="data">
+                  {{data.item.second}}
+                  <span style="font-size: 0.7rem; color:grey">/{{data.item.second_left}}</span>
+                </template>
+                <template #cell(third)="data">
+                  {{data.item.third}}
+                  <span style="font-size: 0.7rem; color:grey">/{{data.item.third_left}}</span>
+                </template>              
+                <template #cell(fourth)="data">
+                  {{data.item.fourth}}
+                  <span style="font-size: 0.7rem; color:grey">/{{data.item.fourth_left}}</span>
+                </template>
               </b-table>
               <template #footer>
                 <em>{{result.Home_round2}} ({{last_throws.home[1]}})</em>
@@ -85,6 +132,22 @@
           <b-col lg="6">
             <b-card no-body class="font-weight-bold theme2" :header=result.Away_team_name :footer-bg-variant = "result.Home_round2 < result.Away_round2 ? 'success': 'danger'">
               <b-table responsive v-b-tooltip striped hover :items="game_throws[3]" :fields="fields" class="font-weight-bold" @row-clicked="Player_selected">
+                <template #cell(first)="data">
+                  {{data.item.first}}
+                  <span style="font-size: 0.7rem; color:grey">/{{data.item.first_left}}</span>
+                </template>
+                <template #cell(second)="data">
+                  {{data.item.second}}
+                  <span style="font-size: 0.7rem; color:grey">/{{data.item.second_left}}</span>
+                </template>
+                <template #cell(third)="data">
+                  {{data.item.third}}
+                  <span style="font-size: 0.7rem; color:grey">/{{data.item.third_left}}</span>
+                </template>              
+                <template #cell(fourth)="data">
+                  {{data.item.fourth}}
+                  <span style="font-size: 0.7rem; color:grey">/{{data.item.fourth_left}}</span>
+                </template>
               </b-table>
               <template #footer>
                 <em>{{result.Away_round2}} ({{last_throws.away[1]}})</em>
@@ -228,14 +291,23 @@ export default {
       this.parse_throw(data.Throws)
     },
     parse_throw(throws){
-      var throws_order = ["first", "second", "third", "fourth"], data_throws = [[], [], [], []], last_throws = {home: [], away: []}, teams_hka = {home: [], away: []};
-      var team = "-", last_point = "-", order = "home";
-      var team_round = 0, throw_n = 0, throwP = 0;
-      var player = {Player__Name: "-", first: "-", second: "-", third: "-", fourth: "-", yht: 0, Hka: 0, id: 0};
+      var throws_order = ["first", "second", "third", "fourth"], 
+      left_order = ["first_left", "second_left", "third_left", "fourth_left"], 
+      data_throws = [[], [], [], []], 
+      last_throws = {home: [], away: []}, 
+      teams_hka = {home: [], away: []};
+      var team = "-", 
+      last_point = "-",
+      order = "home";
+      var team_round = 0, 
+      throw_n = 0, 
+      throwP = 0;
+      var player = {Player__Name: "-", first: "-", first_left: 0, second: "-", second_left: 0, third: "-", third_left: 0, fourth: "-", fourth_left: 0, yht: 0, Hka: 0, id: 0};
       var self = this;
       var throw_names ={home: [["Hauki", 0],["Virkamies", 0],["2", 0], ["4", 0], ["6", 0], ["8", 0], ["10", 0],["12", 0], [">12", 0]], away: [["Hauki", 0],["Virkamies", 0],["2", 0], ["4", 0], ["6", 0], ["8", 0], ["10", 0],["12", 0], [">12", 0]]};
-      throws.forEach(function(val){
-        // console.log(val);
+
+      throws.forEach(function(val){ // Set all the throws to one player object
+        // console.log(val)
         // When the player changes in the json list
         if(player.Player__Name != val.Player__Name){
           //Throw order
@@ -258,9 +330,10 @@ export default {
             }
           }
           team = val.Player_team;
-          player = {Player__Name: val.Player__Name, first: "-", second: "-", third: "-", fourth: "-", yht: 0, Hka: 0, id: val.Player_id}
+          player = {Player__Name: val.Player__Name, first: "-", first_left: 0, second: "-", second_left: 0, third: "-", third_left: 0, fourth: "-", fourth_left: 0, yht: 0, Hka: 0, id: val.Player_id};
         }
-        player[throws_order[throw_n]] = val.Throw_points + ' (' + -1 * val.Kyykkas_left + ')';
+        player[throws_order[throw_n]] = val.Throw_points;
+        player[left_order[throw_n]] = val.Kyykkas_left;
         if (!isNaN(val.Throw_points)){
           throwP = Number(val.Throw_points);
           player.yht += throwP;
@@ -304,33 +377,24 @@ export default {
       .then(response => (this.parse_values(response.data)));
     },
     get_last_points(player){
-      var last_point = "-", last_throw = "-", left = "-";
-      if(player.fourth != "-"){
-        last_point = player.fourth.split(" ");
-        last_throw = Number(last_point[0]);
-        if(isNaN(last_throw)){
-          return last_point[1].slice(1,-1)
-        }
-        else{
-          left = Number(last_point[1].slice(1,-1));
-          return left + last_throw
-        }
 
+      if(player.fourth != "-"){
+        if (player.fourth == "h"){
+          return -1 * player.fourth_left
+        }else{
+          return -1 * (player.fourth_left - player.fourth)
+        }
       }
       else if (player.third != "-"){
-        last_point = player.third.split(" ");
-        last_throw = Number(last_point[0]);
-        if(isNaN(last_throw)){
-          return last_point[1].slice(1,-1)
-        }
-        else{
-          left = Number(last_point[1].slice(1,-1));
-          return left + last_throw
+        if (player.third == "h"){
+          return -1 * player.third_left
+        }else{
+          return -1 * ( player.third_left - player.third)
         }
 
       }
       else{
-        return "-"
+        return "+"
       }
     },
     Player_selected(items) {

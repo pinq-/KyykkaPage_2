@@ -26,7 +26,7 @@
             <b-col sm='1' class='mr-0 p-0'>
               1.
             </b-col>
-            <b-col class='p-0'>
+            <b-col >
             <svg class="progressbar" viewBox="10 0 340 30">
               <rect v-for='index in bar_size' :key='index' width="15" height="25" :x = 'index * 18' :fill = "getColor_hka(index, 1)" stroke= "rgb(10,10,10)"/>
             </svg>
@@ -41,7 +41,7 @@
             <b-col sm='1' class='mr-0 p-0'>
               2.
             </b-col>
-            <b-col class='p-0'>
+            <b-col >
             <svg class="progressbar" viewBox="10 0 340 30">
               <rect v-for='index in bar_size' :key='index' width="15" height="25" :x = 'index * 18' :fill = "getColor_hka(index, 2)" stroke= "rgb(10,10,10)"/>
             </svg>
@@ -56,7 +56,7 @@
             <b-col sm='1' class='mr-0 p-0'>
               3.
             </b-col>
-            <b-col class='p-0'>
+            <b-col >
             <svg class="progressbar" viewBox="10 0 340 30">
               <rect v-for='index in bar_size' :key='index' width="15" height="25" :x = 'index * 18' :fill = "getColor_hka(index, 3)" stroke= "rgb(10,10,10)"/>
             </svg>
@@ -71,7 +71,7 @@
             <b-col sm='1' class='mr-0 p-0'>
                 4.
             </b-col>
-            <b-col class='p-0'>
+            <b-col >
             <svg class="progressbar" viewBox="10 0 340 30">
               <rect v-for='index in bar_size' :key='index' width="15" height="25" :x = 'index * 18' :fill = "getColor_hka(index, 4)" stroke= "rgb(10,10,10)"/>
             </svg>

@@ -15,7 +15,7 @@
             <teams_hka_plot :team_Oka_stats = "team_Oka_stats"/>
           </b-card>
         </b-col>        
-        <b-col lg="6">
+        <b-col>
           <b-card class="font-weight-bold theme2" header = 'Pelaajat' style="overflow:auto" no-body>
             <team_players/>
           </b-card>

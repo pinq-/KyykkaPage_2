@@ -48,10 +48,12 @@
             if (moment().get('date') - value.substr(8,2)  < 1 && value.substr(5,2) == moment().get('month') + 1){
               if (moment.utc(value).hours() != 0){
                 return moment.utc(value).format('HH:mm')
-
               }
             }
-            return moment.utc(value).format('DD.MM.YY')
+            else if (moment().get('year') - value.substr(0,4) > 0){
+              return moment.utc(value).format('DD.MM.YY')
+            }
+            return moment.utc(value).format('DD.MM')
           }, label: 'Aika'},
           { key: "Event__Name", label: "Liiga" },
           { key: "Home_team_name", label: "Koti"},
