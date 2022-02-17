@@ -81,7 +81,7 @@
       </b-row>
       <b-row>
         <b-col>
-            Nolla & H: <strong>{{ nolla }}</strong> %
+            Osuma prosentti: <strong>{{ nolla }}</strong> %
             <svg class="progressbar" viewBox="10 0 340 30">
               <rect v-for='index in bar_size' :key='index' width="15" height="25" :x = 'index * 18' :fill = "getColor_zero(index)" stroke= "rgb(10,10,10)"/>
             </svg>
@@ -160,9 +160,9 @@
     },
     watch: {
       player_data: function () {
-        this.hauki_pro = ((this.player_data[0].Hauki_n / this.player_data[0].Drows_n).toFixed(2) * 100).toFixed().toString() + '%';
-        this.nolla = Number((this.player_data[0].Nolla_n / this.player_data[0].Drows_n).toFixed(2) * 100).toFixed();
-        this.hka = Number((this.player_data[0].Player_resSum / this.player_data[0].Drows_n).toFixed(2));
+        this.hauki_pro = (this.player_data[0].Hauki_n / this.player_data[0].Drows_n * 100).toFixed().toString() + '%';
+        this.nolla = 100 - (this.player_data[0].Nolla_n / this.player_data[0].Drows_n * 100).toFixed();
+        this.hka = (this.player_data[0].Player_resSum / this.player_data[0].Drows_n).toFixed(1);
         this.throws = [this.player_data[0]['throw_mean1'], this.player_data[0]['throw_mean2'], this.player_data[0]['throw_mean3'], this.player_data[0]['throw_mean4']]
       },
     },

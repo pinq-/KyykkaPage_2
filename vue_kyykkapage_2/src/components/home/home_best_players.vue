@@ -33,7 +33,7 @@
             sortable: true,
             label: "Hka",
             formatter:(value, key, item) => {
-              return Number((item.Player_resSum/item.Drows_n).toFixed(2));
+              return Number((item.Player_resSum / item.Drows_n).toFixed(2));
             },
             sortByFormatted: true,
             headerTitle: "Heittokeskiarvo"
@@ -41,7 +41,7 @@
           { key: "Player_posSum",
             label: "HPka",
             formatter:(value, key, item) => {
-              return Number((item.Player_posSum/item.Drows_n).toFixed(2));
+              return Number((item.Player_posSum / item.Drows_n).toFixed(2));
             },
             sortByFormatted: true,
             headerTitle: "Heittopaikkakeskiarvo"

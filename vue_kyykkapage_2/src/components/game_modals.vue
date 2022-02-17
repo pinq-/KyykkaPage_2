@@ -8,13 +8,13 @@
               {{result.Home_result}}
             </b-col>
             <b-col style="font-size: 2.25rem;" md="auto">
-              <span style=" color:#E0D338;">
+              <span style=" color:#E0D338;" @click="Team_selected(true)">
                 {{result.Home_team_name}}
               </span>
               <span class="text-light">
                 vs.
               </span>
-              <span style=" color:#E0D338;">
+              <span style=" color:#E0D338;" @click="Team_selected(false)">
                 {{result.Away_team_name}}
               </span>
             </b-col>
@@ -48,7 +48,10 @@
         </b-row>
         <b-row>
           <b-col lg="6">
-            <b-card no-body class="font-weight-bold theme2" :header=result.Home_team_name :footer-bg-variant = "result.Home_round1 > result.Away_round1 ? 'success': 'danger'">
+            <b-card no-body class="font-weight-bold theme2" :footer-bg-variant = "result.Home_round1 > result.Away_round1 ? 'success': 'danger'">
+              <template #header>
+                <h4 class="mb-0" @click="Team_selected(true)"> {{ result.Home_team_name }} </h4>
+              </template>
               <b-table responsive v-b-tooltip striped hover :items="game_throws[0]" :fields="fields" class="font-weight-bold" @row-clicked="Player_selected">
                 <template #cell(first)="data">
                   {{data.item.first}}
@@ -73,7 +76,10 @@
             </b-card>
           </b-col>
           <b-col lg="6">
-            <b-card no-body class="font-weight-bold theme2" :header=result.Away_team_name :footer-bg-variant = "result.Home_round1 < result.Away_round1 ? 'success': 'danger'">
+            <b-card no-body class="font-weight-bold theme2" :footer-bg-variant = "result.Home_round1 < result.Away_round1 ? 'success': 'danger'">
+              <template #header>
+                <h4 class="mb-0" @click="Team_selected(false)"> {{ result.Away_team_name }} </h4>
+              </template>
               <b-table responsive v-b-tooltip striped hover :items="game_throws[1]" :fields="fields" class="font-weight-bold" @row-clicked="Player_selected">
                 <template #cell(first)="data">
                   {{data.item.first}}
@@ -106,6 +112,9 @@
         <b-row>
           <b-col lg="6">
             <b-card no-body class="font-weight-bold theme2" :header=result.Home_team_name :footer-bg-variant = "result.Home_round2 > result.Away_round2 ? 'success': 'danger'">
+              <template #header>
+                <h4 class="mb-0" @click="Team_selected(true)"> {{ result.Home_team_name }} </h4>
+              </template>
               <b-table responsive v-b-tooltip striped hover :items="game_throws[2]" :fields="fields" class="font-weight-bold" @row-clicked="Player_selected">
                 <template #cell(first)="data">
                   {{data.item.first}}
@@ -131,6 +140,9 @@
           </b-col>
           <b-col lg="6">
             <b-card no-body class="font-weight-bold theme2" :header=result.Away_team_name :footer-bg-variant = "result.Home_round2 < result.Away_round2 ? 'success': 'danger'">
+              <template #header>
+                <h4 class="mb-0" @click="Team_selected(false)"> {{ result.Away_team_name }} </h4>
+              </template>
               <b-table responsive v-b-tooltip striped hover :items="game_throws[3]" :fields="fields" class="font-weight-bold" @row-clicked="Player_selected">
                 <template #cell(first)="data">
                   {{data.item.first}}
@@ -283,6 +295,7 @@ export default {
   },
   methods: {
     parse_values(data) {
+      // console.log(data.Results[0])
       this.result = data.Results[0];
       this.result.Game_time = moment.utc(this.result.Game_time).format('HH:mm DD.MM.YY')
       this.result.max_heitto = 0
@@ -358,7 +371,7 @@ export default {
 
         }
         throw_n++;
-        player.Hka = Number((player.yht/throw_n).toFixed(2));
+        player.Hka = (player.yht / throw_n).toFixed(2);
       });
       last_point = this.get_last_points(player)
       last_throws["away"].push(last_point)
@@ -400,6 +413,16 @@ export default {
     Player_selected(items) {
       this.$bvModal.hide("modal-1")
       this.$router.push({ name: 'Player_data', params: { id : items.id}}).catch(()=>{});
+    },    
+    Team_selected(items) {
+      if (items){
+        this.$router.push({ name: 'Team_data', params: { id : this.result.Home_team_id}})
+      }
+      else{
+        this.$router.push({ name: 'Team_data', params: { id : this.result.Away_team_id}})
+      }
+      // this.$bvModal.hide("modal-1")
+      // this.$router.push({ name: 'Player_data', params: { id : items.id}}).catch(()=>{});
     },
   },
   watch: {

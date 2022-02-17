@@ -18,7 +18,7 @@
           { key: "Player_posSum",
             label: "HPka",
             formatter:(value, key, item) => {
-              return Number((item.Player_posSum/item.Drows_n).toFixed(2));
+              return (item.Player_posSum/item.Drows_n).toFixed(2);
             },
             headerTitle: "Heittopaikan keskiarvo"
           },

@@ -90,15 +90,15 @@
                 if (data[1].length){// If there is more years
                     var hkas = [],
                     year = []; // for x-axis tiks
-                    hkas.unshift([data[0][0].Event__Name, Number((data[0][0].Player_resSum / data[0][0].Drows_n).toFixed(2)), data[0][0].Event__Year])
+                    hkas.unshift([data[0][0].Event__Name, +(data[0][0].Player_resSum / data[0][0].Drows_n).toFixed(2), data[0][0].Event__Year])
                     year.unshift(data[0][0].Event__Year)
                     data[1].forEach(function(val){
-                        hkas.unshift([val.Event__Name, Number((val.Player_resSum / val.Drows_n).toFixed(2)), val.Event__Year])
+                        hkas.unshift([val.Event__Name, +(val.Player_resSum / val.Drows_n).toFixed(2), val.Event__Year])
                         year.unshift(val.Event__Year)
                     });
                     this.player_hka_stats = [{year: year}, {hka: hkas }];
                 }else{// if this is the first year
-                    this.player_hka_stats = [{year: [this.year.value]}, {hka: [[data[0][0].Event__Name, Number((data[0][0].Player_resSum / data[0][0].Drows_n).toFixed(2)), data[0][0].Event__Year]] }];
+                    this.player_hka_stats = [{year: [this.year.value]}, {hka: [[data[0][0].Event__Name, (data[0][0].Player_resSum / data[0][0].Drows_n).toFixed(2), data[0][0].Event__Year]] }];
 
                 }
 
@@ -144,6 +144,7 @@
                 if (isNaN(points)){
                   points = 0;
                 }
+                // Histogram
                 if (val.Throw_KyykkasInt > 6){
                   histogram_plot_category = 7;
                 } else{
@@ -158,9 +159,11 @@
                 else if(val.Kyykkas_left <= 40){
                   less[histogram_plot_category] += 1;
                 }
+                // Every round 
                 if (val.Player_order > order){
                   RoundScore += points;
-                }else{
+                }else
+                {
                     if (player.Best_round < RoundScore){
                         player.Best_round = RoundScore;
                     }
@@ -205,7 +208,7 @@
                 }
                 round[throw_names[pointer]] = val.Throw_points;
                 round.Throw_sum = RoundScore;
-                round.throw_mean = RoundScore / (pointer + 1);
+                round.throw_mean = (RoundScore / (pointer + 1)).toFixed(1);
                 if (round.Best_drow < points){
                     round.Best_drow = points;
                 }
@@ -222,7 +225,7 @@
                 if(val.length == 0){
                     player[throw_mean_names[i]] = 0;
                 }else{
-                    player[throw_mean_names[i]] = Math.round(100*(val.reduce((a, b) => a + b, 0)/val.length))/100 + " p (" + val.length + ")";
+                    player[throw_mean_names[i]] = (val.reduce((a, b) => a + b, 0) / val.length).toFixed(1) + " p (" + val.length + ")";
                 }
             });
             // console.log(player)

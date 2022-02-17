@@ -44,13 +44,13 @@
                                 </span>
                                 Etusivu
                             </b-nav-item>
-                            <b-nav-item to="/player">
+                            <b-nav-item to="/player/-">
                                 <span class="d-inline-block m-2">
                                     <b-icon icon="person-bounding-box" scale="1.5"></b-icon>
                                 </span>
                                 Pelaajat
                             </b-nav-item>
-                            <b-nav-item to="/teams">
+                            <b-nav-item to="/teams/-">
                                 <span class="d-inline-block m-2">
                                     <b-icon icon="people-fill" scale="1.5"></b-icon>
                                 </span>
