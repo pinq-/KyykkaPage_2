@@ -239,14 +239,18 @@
             this.player_throw_divide_data = [starts, more, less];
             },
             get_player_stats(){
-                axios
-                .get('https://pinq.kapsi.fi/DK/api/data/player/' + this.$route.params.id)
-                .then(response => (this.parse_player_stats(response.data)));
+                if(this.$route.params.id != '-'){
+                    axios
+                    .get('https://pinq.kapsi.fi/DK/api/data/player/' + this.$route.params.id)
+                    .then(response => (this.parse_player_stats(response.data)));
+                }
             },
             get_player_throws(){
-                axios
-                .get('https://pinq.kapsi.fi/DK/api/data/player_throws/' + this.$route.params.id)
-                .then(response => (this.parse_player_thorws(response.data)));
+                if (this.$route.params.id != '-'){
+                    axios
+                    .get('https://pinq.kapsi.fi/DK/api/data/player_throws/' + this.$route.params.id)
+                    .then(response => (this.parse_player_thorws(response.data)));
+                }
             },
         },
         props: ["year", "liig"],

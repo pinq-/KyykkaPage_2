@@ -74,9 +74,11 @@ import axios from 'axios'
     },
     methods: {
       get_data(){
-        axios
-        .get('https://pinq.kapsi.fi/DK/api/data/team_players/' + this.$store.state.team_id)
-        .then(response => (this.parse_values(response.data)));
+        if ( this.$store.state.team_id != '-'){
+          axios
+          .get('https://pinq.kapsi.fi/DK/api/data/team_players/' + this.$store.state.team_id)
+          .then(response => (this.parse_values(response.data)));
+        }
       },
       parse_values(data){
         this.items  = data;

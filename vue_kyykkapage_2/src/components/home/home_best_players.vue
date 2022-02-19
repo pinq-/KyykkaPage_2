@@ -58,19 +58,21 @@
         this.litems = data;
       },
       get_data(){
-        axios
-        .get('https://pinq.kapsi.fi/DK/api/data/hka_top/' + this.year.value + "/" + this.liig.value)
-        .then(response => (this.parse_values(response.data)));
+        if (this.$store.state.year.text && this.$store.state.liig.text){
+          axios
+          .get('https://pinq.kapsi.fi/DK/api/data/hka_top/' + this.$store.state.year.text + '/' + this.$store.state.liig.value)
+          .then(response => (this.parse_values(response.data)));
+        }
       },
       Player_selected(items) {
           this.$router.push({ name: 'Player_data', params: { id : items.id}});
         },
     },
     watch: {
-      liig: function () {
+       '$store.state.liig': function () {
         this.get_data();
       },
-      year:function () {
+       '$store.state.year':function () {
         this.get_data();
       },
     }

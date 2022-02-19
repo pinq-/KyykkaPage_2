@@ -1,6 +1,6 @@
 <template lang="html">
   <div>
-    <b-modal id="modal-3" size="xl" content-class = 'theme2' footer-class = 'theme3' header-class = 'theme3'>
+    <b-modal id="modal-3" size="lg" content-class = 'theme2' footer-class = 'theme3' header-class = 'theme3' body-class="p-0">
     <template #modal-header>
       <b-dropdown :text="year.text">
         <b-dropdown-item @click="select_year(now_year + 1 - year_i)" v-for="year_i in now_year - 2004" :key="year_i">
@@ -17,7 +17,7 @@
               </div>
           </b-dropdown-item>
       </b-dropdown>
-      <h5>Kaikki joukkueet</h5>
+      <h4 style="color :#FFED8F; ">Kaikki joukkueet</h4>
       <b-col lg="6" class="my-1">
         <b-form-group
           label="Etsi"
@@ -150,8 +150,7 @@ export default {
   },
   watch: {
     '$store.state.teams_modal': function () {
-      // console.log(this.items.length)
-      // console.log(this.$store.state.year)
+      // if something is changed or there is no data
       if (this.$store.state.year != this.year || this.$store.state.liig != this.liig || this.items.length == 0){
         this.year = this.$store.state.year;
         this.liig = this.$store.state.liig;

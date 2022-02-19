@@ -11,9 +11,9 @@
                 <b-container class="w-25">
                     <b-col>
                         <b-dropdown v-if="$route.name == 'Home'" :text="$store.state.year.text">
-                            <b-dropdown-item :disabled="option.disabled" @click="select_year(option)" v-for="option in options_years" :key="option.value">
+                            <b-dropdown-item  @click="select_year(year.value + 1 - year_i)" v-for="year_i in year.value - 2004" :key="year_i">
                                 <div>
-                                    {{option.text}}
+                                    <b>{{year.value + 1 - year_i}}</b>
                                 </div>
                             </b-dropdown-item>
                         </b-dropdown>
@@ -30,7 +30,9 @@
                     </b-col>                     
                     <b-col>
                         <teams_modal/>
+                        <players_modal/>
                         <b-button  v-if="$route.name == 'Team_data'"  @click="show_all_teams()"> Kaikki joukkueet </b-button>
+                        <b-button  v-if="$route.name == 'Player_data'"  @click="show_all_players()"> Kaikki pelaajat </b-button>
                     </b-col>                    
                 </b-container>
             </b-collapse>
@@ -77,9 +79,11 @@
 </template>
 <script>
     import teams_modal from '@/components/teams_modal.vue'
+    import players_modal from '@/components/players_modal.vue'
     export default {
         components: {
             teams_modal,
+            players_modal,
 
         },
         data() {
@@ -118,12 +122,6 @@
             }
         },
         mounted() {
-            for (let i = this.year.value; i >= 2005; i--) {
-                this.options_years.push({
-                    value: i,
-                    text: String(i)
-                });
-            }
             document.title = "Maksimi kyykkä data";
             this.$store.state.year = this.year;
             this.$store.state.liig = this.liig;
@@ -131,8 +129,8 @@
         methods: {
             select_year(option) {
                 // console.log(this.$store.state.year)
-                this.$store.state.year = option;
-                this.year = option;
+                this.$store.state.year = {value: option, text: option.toString()};
+                this.year = {value: option, text: option.toString()};
             },
             select_liig(option) {
                 // console.log(option)
@@ -143,6 +141,12 @@
               this.$store.state.teams_modal *= -1;
               // console.log(this.$refs.childComponent);
               this.$bvModal.show("modal-3")
+              // this.$refs['v-b-modal.modal-1'].show()
+            },            
+            show_all_players() {
+              this.$store.state.players_modal *= -1;
+              // console.log(this.$refs.childComponent);
+              this.$bvModal.show("modal-4")
               // this.$refs['v-b-modal.modal-1'].show()
             },
 

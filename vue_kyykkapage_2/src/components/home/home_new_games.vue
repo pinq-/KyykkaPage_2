@@ -78,13 +78,15 @@
           // this.$refs['v-b-modal.modal-1'].show()
         },
       get_data(){
-        axios
-        .get('https://pinq.kapsi.fi/DK/api/data/new_games_10/' +this.liig.value)
-        .then(response => (this.parse_values(response.data)));
+        if (this.$store.state.liig.value){
+          axios
+          .get('https://pinq.kapsi.fi/DK/api/data/new_games_10/' + this.$store.state.liig.value)
+          .then(response => (this.parse_values(response.data)));
+        }
       }
     },
     watch: {
-      liig: function () {
+      '$store.state.liig': function () {
         this.get_data();
       },
     }

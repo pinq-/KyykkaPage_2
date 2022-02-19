@@ -93,14 +93,16 @@
 
       },
       get_data() {
+        if (this.$store.state.year.text){
+          axios
+          .get('https://pinq.kapsi.fi/DK/api/data/plot/' + this.$store.state.year.text)
+          .then(response => (this.parse_values(response.data)));
 
-        axios
-        .get('https://pinq.kapsi.fi/DK/api/data/plot/' + this.year.value)
-        .then(response => (this.parse_values(response.data)));
+        }
       }
     },
     watch: {
-      year: function () {
+      '$store.state.year': function () {
         this.get_data();
       },
     }

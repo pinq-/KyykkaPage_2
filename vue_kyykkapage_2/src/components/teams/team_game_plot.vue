@@ -100,9 +100,11 @@ p<template lang="html">
   
       },
       get_data(){
-        axios
-        .get('https://pinq.kapsi.fi/DK/api/data/games/' + this.$store.state.team_id)
-        .then(response => (this.parse_values(response.data)));
+        if ( this.$store.state.team_id != '-'){
+          axios
+          .get('https://pinq.kapsi.fi/DK/api/data/games/' + this.$store.state.team_id)
+          .then(response => (this.parse_values(response.data)));
+        }
       },
     },
         data(){
@@ -110,23 +112,12 @@ p<template lang="html">
         chartOptions: {
               chart: {
                   backgroundColor: '#bcd899',
-              //     events: {
-              //     click: function(event) {
-              //       console.log(event)
-              //     }
-              // }
               },
               title: {
                   text: ''
               },
               credits:{enabled:false},
               xAxis: [{
-                  //alignTicks: false,
-                  // title: { text: 'Poistetut kyykät' },
-                  // categories: [0, 1, 2, 3, 4, 5, 6, 7],
-                  // tickInterval: 1,
-
-                  // min: -120,
               },
               ],
               legend: {

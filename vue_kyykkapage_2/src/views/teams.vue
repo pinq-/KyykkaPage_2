@@ -63,10 +63,12 @@ export default {
   },
   methods: {
     get_team_stats(){
-      this.$store.state.team_id = this.$route.params.id
-      axios
-      .get('https://pinq.kapsi.fi/DK/api/data/team/' + this.$route.params.id)
-      .then(response => (this.parse_team_stats(response.data)));
+      if (this.$route.params.id != '-'){
+        this.$store.state.team_id = this.$route.params.id
+        axios
+        .get('https://pinq.kapsi.fi/DK/api/data/team/' + this.$route.params.id)
+        .then(response => (this.parse_team_stats(response.data)));
+      }
     },
     parse_team_stats(data){
       this.team_name = data[0].Team_short_name

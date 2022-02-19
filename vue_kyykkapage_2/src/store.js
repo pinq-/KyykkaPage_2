@@ -10,6 +10,7 @@ export default new Vuex.Store({
     game_modal: 1,
     games_modal: 1,
     teams_modal: 1,
+    players_modal: 1,
     team_id: 0,
     team_name_short : '-',
     year: 0,
