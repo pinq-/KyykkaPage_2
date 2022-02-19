@@ -10,17 +10,16 @@
                 <img src="@/assets/logo.png" width="90" class = 'm-2'/>
                 <b-container class="w-25">
                     <b-col>
-                        <b-dropdown :text="year ? year.text : 'Valitse vuosi'">
+                        <b-dropdown v-if="$route.name == 'Home'" :text="$store.state.year.text">
                             <b-dropdown-item :disabled="option.disabled" @click="select_year(option)" v-for="option in options_years" :key="option.value">
                                 <div>
-                                    <img :src=option.src width="30">
                                     {{option.text}}
                                 </div>
                             </b-dropdown-item>
                         </b-dropdown>
                     </b-col>
                     <b-col>
-                        <b-dropdown :text="liig ? liig.text : 'Valitse liiga'">
+                        <b-dropdown  v-if="$route.name == 'Home'" :text="$store.state.liig.text">
                             <b-dropdown-item :disabled="option.disabled" @click="select_liig(option)" v-for="option in options_liig" :key="option.value">
                                 <div>
                                     <img :src=option.src width="30">
@@ -28,7 +27,11 @@
                                 </div>
                             </b-dropdown-item>
                         </b-dropdown>
-                    </b-col>
+                    </b-col>                     
+                    <b-col>
+                        <teams_modal/>
+                        <b-button  v-if="$route.name == 'Team_data'"  @click="show_all_teams()"> Kaikki joukkueet </b-button>
+                    </b-col>                    
                 </b-container>
             </b-collapse>
         </b-navbar>
@@ -73,8 +76,14 @@
     </div>
 </template>
 <script>
+    import teams_modal from '@/components/teams_modal.vue'
     export default {
+        components: {
+            teams_modal,
+
+        },
         data() {
+
             return {
                 year: {
                     value: new Date().getFullYear(),
@@ -115,15 +124,28 @@
                     text: String(i)
                 });
             }
-            document.title = "Maksimi kyykkä data"
+            document.title = "Maksimi kyykkä data";
+            this.$store.state.year = this.year;
+            this.$store.state.liig = this.liig;
         },
         methods: {
             select_year(option) {
+                // console.log(this.$store.state.year)
+                this.$store.state.year = option;
                 this.year = option;
             },
             select_liig(option) {
+                // console.log(option)
+                this.$store.state.liig = {value: option.value, text: option.text};
                 this.liig = option;
             },
+            show_all_teams() {
+              this.$store.state.teams_modal *= -1;
+              // console.log(this.$refs.childComponent);
+              this.$bvModal.show("modal-3")
+              // this.$refs['v-b-modal.modal-1'].show()
+            },
+
         }
     }
 </script>
