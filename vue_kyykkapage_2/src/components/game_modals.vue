@@ -1,6 +1,6 @@
 <template lang="html">
   <div>
-    <b-modal id="modal-1" size="xl" body-bg-variant="dark" header-class="darker" footer-class="darker">
+    <b-modal id="modal-1" size="huge" body-bg-variant="dark" header-class="darker" footer-class="darker">
       <template #modal-header="{ close }">
         <b-container fluid >
           <b-row class="justify-content-md-center font-weight-bold text-center" style="font-size: 1.6rem;">
@@ -47,7 +47,7 @@
           </b-col>
         </b-row>
         <b-row>
-          <b-col lg="6">
+          <b-col class = "mt-4">
             <b-card no-body class="font-weight-bold theme2" :footer-bg-variant = "result.Home_round1 > result.Away_round1 ? 'success': 'danger'">
               <template #header>
                 <h4 class="mb-0" @click="Team_selected(true)"> {{ result.Home_team_name }} </h4>
@@ -75,7 +75,7 @@
               </template>
             </b-card>
           </b-col>
-          <b-col lg="6">
+          <b-col class = "mt-4">
             <b-card no-body class="font-weight-bold theme2" :footer-bg-variant = "result.Home_round1 < result.Away_round1 ? 'success': 'danger'">
               <template #header>
                 <h4 class="mb-0" @click="Team_selected(false)"> {{ result.Away_team_name }} </h4>
@@ -110,7 +110,7 @@
           </b-col>
         </b-row>
         <b-row>
-          <b-col lg="6">
+          <b-col class = "mt-4">
             <b-card no-body class="font-weight-bold theme2" :header=result.Home_team_name :footer-bg-variant = "result.Home_round2 > result.Away_round2 ? 'success': 'danger'">
               <template #header>
                 <h4 class="mb-0" @click="Team_selected(true)"> {{ result.Home_team_name }} </h4>
@@ -138,7 +138,7 @@
               </template>
             </b-card>
           </b-col>
-          <b-col lg="6">
+          <b-col class = "mt-4">
             <b-card no-body class="font-weight-bold theme2" :header=result.Away_team_name :footer-bg-variant = "result.Home_round2 < result.Away_round2 ? 'success': 'danger'">
               <template #header>
                 <h4 class="mb-0" @click="Team_selected(false)"> {{ result.Away_team_name }} </h4>

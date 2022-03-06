@@ -66,14 +66,6 @@
               // this.$refs['v-b-modal.modal-2'].show()
             },
         },
-        // watch: {
-        //   '$store.state.year': function () {
-        //     this.get_data();
-        //   },
-        //   '$store.state.liig':function () {
-        //     this.get_data();
-        //   },
-        // }
     }
 </script>
 <style>

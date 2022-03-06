@@ -15,5 +15,6 @@ export default new Vuex.Store({
     team_name_short : '-',
     year: 0,
     liig: 0,
+    screen_size: 0,
   }
 })

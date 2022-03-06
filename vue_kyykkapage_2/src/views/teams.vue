@@ -4,6 +4,7 @@
       <b-row>
         <b-col>
           <game_modals/>
+          <teams_modal/>
           <b-card class="font-weight-bold theme2" style="overflow:auto" :header = 'team_name_full + " (" + team_name + ") | " + team_liig ' no-body>
             <teams_stats :team_data = "team_data"/>
           </b-card>
@@ -39,6 +40,7 @@ import teams_stats from '@/components/teams/team_stats.vue'
 import teams_hka_plot from '@/components/teams/team_hka_plot.vue'
 import team_players from '@/components/teams/team_players.vue'
 import team_game_plot from '@/components/teams/team_game_plot.vue'
+ import teams_modal from '@/components/teams_modal.vue'
 import axios from 'axios'
 
 export default {
@@ -48,7 +50,8 @@ export default {
     teams_stats,
     teams_hka_plot,
     team_players,
-    team_game_plot
+    team_game_plot,
+    teams_modal
   },
   props:["year", "liig"],
   data(){

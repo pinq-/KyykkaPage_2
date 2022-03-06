@@ -1,23 +1,8 @@
 <template lang="html">
   <div>
-    <b-modal id="modal-4" size="xl" content-class = 'theme2' footer-class = 'theme3' header-class = 'theme3' body-class="p-0">
-      <template #modal-header>
-        <b-dropdown :text="year.text">
-          <b-dropdown-item @click="select_year(now_year + 1 - year_i)" v-for="year_i in now_year - 2004" :key="year_i">
-              <div>
-                  <b>{{now_year + 1 - year_i}}</b>
-              </div>
-          </b-dropdown-item>
-        </b-dropdown>      
-        <b-dropdown :text="liig.text">
-            <b-dropdown-item :disabled="option.disabled" @click="select_liig(option)" v-for="option in options_liig" :key="option.value">
-                <div>
-                    <img :src=option.src width="30">
-                    {{option.text}}
-                </div>
-            </b-dropdown-item>
-        </b-dropdown>
-        <h3 style="color :#FFED8F; ">Kaikki pelaajat</h3>
+    <b-modal id="modal-players" size="huge" scrollable content-class = 'theme2' footer-class = 'theme3' header-class = 'theme3' body-class="p-0">
+      <template #modal-header>    
+        <h3 v-if = "$store.state.screen_size > 400" class = "font-weight-bold" style="color :#FFED8F; ">Kaikki pelaajat</h3>
         <b-col lg="6" class="my-1">
           <b-form-group
             label="Etsi"
@@ -42,17 +27,37 @@
           </b-form-group>
         </b-col>
       </template>
+      <template #modal-footer>
+          <b-dropdown class = 'mx-auto' :text="year.text">
+            <b-dropdown-item @click="select_year(now_year + 1 - year_i)" v-for="year_i in now_year - 2004" :key="year_i">
+              <div>
+                  <b>{{now_year + 1 - year_i}}</b>
+              </div>
+            </b-dropdown-item>
+          </b-dropdown>  
+          <b-dropdown class = "mx-auto" :text="liig.text">
+            <b-dropdown-item :disabled="option.disabled" @click="select_liig(option)" v-for="option in options_liig" :key="option.value">
+                <div>
+                    <img :src=option.src width="30">
+                    {{option.text}}
+                </div>
+            </b-dropdown-item>
+          </b-dropdown>
+          <b-button size="sm" variant="success" @click="$bvModal.hide('modal-players')">
+            Sulje
+          </b-button>
+    </template>
       <b-table 
       responsive 
       striped 
       hover 
-      :items="items" 
-      :fields="fields" 
-      class="font-weight-bold" 
-      sort-by="Player_resSum" 
-      :sort-desc="sortDesc" 
-      @row-clicked="Player_selected"
-      :filter="filter"
+      :items = "items" 
+      :fields = "fields" 
+      class = "font-weight-bold" 
+      sort-by = "Player_resSum" 
+      :sort-desc = "sortDesc" 
+      @row-clicked = "Player_selected"
+      :filter = "filter"
       >
         <template #cell(Event__Name)="data">
           <img v-if="data.item.Event__Name == 'NKL'" src="@/assets/NKL_small.png" width="30"/>
@@ -160,7 +165,7 @@ export default {
       .then(response => (this.parse_values(response.data)));
     },
     Player_selected(items) {
-      this.$bvModal.hide("modal-4")
+      this.$bvModal.hide("modal-players")
       // console.log(items)
       this.$router.push({ name: 'Player_data', params: { id : items.id}}).catch(()=>{});
     },

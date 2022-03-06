@@ -1,5 +1,6 @@
 <template>
     <div class="home">
+        <players_modal/>
         <b-container fluid>
             <b-row>
                 <b-col>
@@ -49,6 +50,7 @@
     import game_modals from '@/components/game_modals.vue'
     import player_extra_stats from '@/components/player/player_bars.vue'
     import player_throw_plot from '@/components/player/player_throw_plot.vue'
+    import players_modal from '@/components/players_modal.vue'
     export default {
         name: 'Home',
         components: {
@@ -58,6 +60,7 @@
             game_modals,
             player_extra_stats,
             player_throw_plot,
+            players_modal,
         },
         data(){
             return {

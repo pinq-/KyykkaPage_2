@@ -4,38 +4,8 @@
             <b-navbar-brand v-b-toggle.sidebar-1>
                 <b-icon icon="arrow-bar-right" font-scale="2"></b-icon>
             </b-navbar-brand>
-            <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-            <b-collapse id="nav-collapse" is-nav class="h2 font-weight-bold">
-                Ultimate kyykkä tilastot
+                <h1 class = 'font-weight-bold'>Ultimate kyykkä tilastot</h1>
                 <img src="@/assets/logo.png" width="90" class = 'm-2'/>
-                <b-container class="w-25">
-                    <b-col>
-                        <b-dropdown v-if="$route.name == 'Home'" :text="$store.state.year.text">
-                            <b-dropdown-item  @click="select_year(year.value + 1 - year_i)" v-for="year_i in year.value - 2004" :key="year_i">
-                                <div>
-                                    <b>{{year.value + 1 - year_i}}</b>
-                                </div>
-                            </b-dropdown-item>
-                        </b-dropdown>
-                    </b-col>
-                    <b-col>
-                        <b-dropdown  v-if="$route.name == 'Home'" :text="$store.state.liig.text">
-                            <b-dropdown-item :disabled="option.disabled" @click="select_liig(option)" v-for="option in options_liig" :key="option.value">
-                                <div>
-                                    <img :src=option.src width="30">
-                                    {{option.text}}
-                                </div>
-                            </b-dropdown-item>
-                        </b-dropdown>
-                    </b-col>                     
-                    <b-col>
-                        <teams_modal/>
-                        <players_modal/>
-                        <b-button  v-if="$route.name == 'Team_data'"  @click="show_all_teams()"> Kaikki joukkueet </b-button>
-                        <b-button  v-if="$route.name == 'Player_data'"  @click="show_all_players()"> Kaikki pelaajat </b-button>
-                    </b-col>                    
-                </b-container>
-            </b-collapse>
         </b-navbar>
         <router-view :year="year" :liig="liig" />
         <div id="nav">
@@ -67,6 +37,14 @@
                                 </span>
                                 Ekstrat
                             </b-nav-item>
+                            <b-nav-item href = "https://github.com/pinq-/KyykkaPage_2/tree/main/vue_kyykkapage_2">
+                                <span class="d-inline-block m-2">
+                                    <b-icon icon="github" scale=" 0.8"></b-icon>
+                                </span>
+                                <span style = "font-size:0.7em;">
+                                    Github
+                                </span>
+                            </b-nav-item>
                         </b-nav>
                     </nav>
                     <b-button variant="outline-info" class="mb-2" @click="hide">
@@ -75,17 +53,29 @@
                 </template>
             </b-sidebar>
         </div>
+        <b-navbar fixed = 'bottom' class = 'theme3 font-weight-bold' align = 'center'>
+            <b-dropdown class = 'mx-auto' v-if="$route.name == 'Home'" :text="$store.state.year.text">
+                <b-dropdown-item  @click="select_year(year.value + 1 - year_i)" v-for="year_i in year.value - 2004" :key="year_i">
+                    <div>
+                        <b>{{year.value + 1 - year_i}}</b>
+                    </div>
+                </b-dropdown-item>
+            </b-dropdown>
+            <b-dropdown class = 'mx-auto' v-if="$route.name == 'Home'" :text="$store.state.liig.text">
+                <b-dropdown-item :disabled="option.disabled" @click="select_liig(option)" v-for="option in options_liig" :key="option.value">
+                    <div>
+                        <img :src=option.src width="30">
+                            {{option.text}}
+                    </div>
+                </b-dropdown-item>
+            </b-dropdown>
+             <b-button class = 'mx-auto'  v-if="$route.name == 'Team_data'"  @click="show_all_teams()"> Kaikki joukkueet </b-button>
+             <b-button class = 'mx-auto'  v-if="$route.name == 'Player_data'"  @click="show_all_players()"> Kaikki pelaajat </b-button>
+        </b-navbar>
     </div>
 </template>
 <script>
-    import teams_modal from '@/components/teams_modal.vue'
-    import players_modal from '@/components/players_modal.vue'
     export default {
-        components: {
-            teams_modal,
-            players_modal,
-
-        },
         data() {
 
             return {
@@ -125,6 +115,7 @@
             document.title = "Maksimi kyykkä data";
             this.$store.state.year = this.year;
             this.$store.state.liig = this.liig;
+            this.$store.state.screen_size = window.innerWidth;
         },
         methods: {
             select_year(option) {
@@ -140,13 +131,13 @@
             show_all_teams() {
               this.$store.state.teams_modal *= -1;
               // console.log(this.$refs.childComponent);
-              this.$bvModal.show("modal-3")
+              this.$bvModal.show("modal-teams")
               // this.$refs['v-b-modal.modal-1'].show()
             },            
             show_all_players() {
               this.$store.state.players_modal *= -1;
               // console.log(this.$refs.childComponent);
-              this.$bvModal.show("modal-4")
+              this.$bvModal.show("modal-players")
               // this.$refs['v-b-modal.modal-1'].show()
             },
 
@@ -208,7 +199,7 @@
         box-shadow: none;
     }
 
-    .h2 {
+    h1 {
         color: $theme1;
     }
 
@@ -225,10 +216,11 @@
      background-color: $theme3!important;
      color: $theme1;
     }
-    //table{
-    // background-color: $theme2!important; 
-    //}
     th {
     background-color: $theme3 !important;
+    }
+    .modal .modal-huge {
+        max-width: 90%;
+        width: 90%;
     }
 </style>

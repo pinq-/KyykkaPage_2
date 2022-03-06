@@ -1,6 +1,6 @@
 <template lang="html">
   <div>
-    <b-modal id="modal-2" size="xl" body-bg-variant="dark" header-class="darker" footer-class="darker">
+    <b-modal id="modal-2" size="huge" body-bg-variant="dark" header-class="darker" footer-class="darker">
       <b-table responsive small striped hover :items="items" :fields="fields" class="font-weight-bold" @row-clicked="Game_selected">
         <template #cell(Event__Name)="data">
           <img v-if="data.item.Event__Name == 'NKL'" src="@/assets/NKL_small.png" width="20"/>
