@@ -26,12 +26,7 @@
             <b-col lg="3">
                 <game_modals/>
                 <games_modal/>
-                <b-card class="font-weight-bold mt-2 theme2" no-body>
-                    <template #header>
-                        <b-row class="justify-content-md-center">
-                            <h5 class="m-2" > Viimeisimmät pelit </h5>
-                        </b-row>
-                    </template>
+                <b-card class="font-weight-bold mt-2 theme2" no-body header="Viimeisimmät pelit">
                     <new_games :liig="liig" v-on="$listeners"/>
                 </b-card>
             </b-col>

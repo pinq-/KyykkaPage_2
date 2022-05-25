@@ -53,22 +53,29 @@
                 </template>
             </b-sidebar>
         </div>
+
         <b-navbar fixed = 'bottom' class = 'theme3 font-weight-bold' align = 'center'>
-            <b-dropdown class = 'mx-auto' v-if="$route.name == 'Home'" :text="$store.state.year.text">
-                <b-dropdown-item  @click="select_year(year.value + 1 - year_i)" v-for="year_i in year.value - 2004" :key="year_i">
-                    <div>
-                        <b>{{year.value + 1 - year_i}}</b>
-                    </div>
-                </b-dropdown-item>
-            </b-dropdown>
-            <b-dropdown class = 'mx-auto' v-if="$route.name == 'Home'" :text="$store.state.liig.text">
-                <b-dropdown-item :disabled="option.disabled" @click="select_liig(option)" v-for="option in options_liig" :key="option.value">
-                    <div>
-                        <img :src=option.src width="30">
-                            {{option.text}}
-                    </div>
-                </b-dropdown-item>
-            </b-dropdown>
+            <div class = 'mx-auto' v-if="$route.name == 'Home'" >
+                <span v-if="$route.name == 'Home'" >Vuosi: </span>
+                <b-dropdown dropup v-if="$route.name == 'Home'" :text="$store.state.year.text">
+                    <b-dropdown-item  @click="select_year(year.value + 1 - year_i)" v-for="year_i in year.value - 2004" :key="year_i">
+                        <div>
+                            <b>{{year.value + 1 - year_i}}</b>
+                        </div>
+                    </b-dropdown-item>
+                </b-dropdown>
+            </div>
+            <div class = 'mx-auto' v-if="$route.name == 'Home'" >
+                <span v-if="$route.name == 'Home'" >Liiga: </span>
+                <b-dropdown dropup v-if="$route.name == 'Home'" :text="$store.state.liig.text">
+                    <b-dropdown-item :disabled="option.disabled" @click="select_liig(option)" v-for="option in options_liig" :key="option.value">
+                        <div>
+                            <img :src=option.src width="30">
+                                {{option.text}}
+                        </div>
+                    </b-dropdown-item>
+                </b-dropdown>
+            </div>
              <b-button class = 'mx-auto'  v-if="$route.name == 'Team_data'"  @click="show_all_teams()"> Kaikki joukkueet </b-button>
              <b-button class = 'mx-auto'  v-if="$route.name == 'Player_data'"  @click="show_all_players()"> Kaikki pelaajat </b-button>
         </b-navbar>
@@ -158,7 +165,10 @@
 
     #nav a {
         font-weight: bold;
-        color: $theme1;
+        color: $theme2;
+        text-shadow:1px 1px $theme4,
+                    2px 2px $theme4,
+                    3px 3px $theme4;
 
     }
     #b-card{
@@ -183,7 +193,9 @@
     .theme2 {
         background-color: $theme2 !important;
     }
-
+    .green_own {
+        background-color: #A0C334 !important;
+    }
 
     select,
     button {
@@ -191,7 +203,7 @@
         border: none !important;
         outline: none !important;
         font-weight: bold !important;
-        color: $theme4 !important;
+        color: black !important;
     }
 
     .btn {
@@ -200,7 +212,14 @@
     }
 
     h1 {
-        color: $theme1;
+        color: $theme2;
+        text-shadow: 1px 1px $theme4,
+        2px 2px $theme4,
+        3px 3px $theme4,
+        4px 4px $theme4,
+        5px 5px $theme4,
+        6px 6px $theme4,
+  ;
     }
 
     .b-sidebar-body {
@@ -209,12 +228,16 @@
 
     .b-sidebar-header {
         background-color: $theme4 !important;
-        color: $theme1;
+        color: $theme2;
     }
 
     .card-header{
-     background-color: $theme3!important;
-     color: $theme1;
+        background-color: $theme3 !important;
+        color: $theme2;
+        text-shadow:1px 1px $theme4,
+                    2px 2px $theme4,
+                    3px 3px $theme4;
+        font-weight: bold;
     }
     th {
     background-color: $theme3 !important;

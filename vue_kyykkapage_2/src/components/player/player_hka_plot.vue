@@ -14,7 +14,7 @@
         data_plot: [],
         chartOptions: {
               chart: {
-                  backgroundColor: '#bcd899',
+                  backgroundColor: '#F8CB2E',
                   type: 'line',
               },
               title: {

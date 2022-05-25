@@ -5,7 +5,21 @@
         <b-col>
           <game_modals/>
           <teams_modal/>
-          <b-card class="font-weight-bold theme2" style="overflow:auto" :header = 'team_name_full + " (" + team_name + ") | " + team_liig ' no-body>
+          <b-card class="font-weight-bold theme2" style="overflow:auto" no-body>
+            <template #header>
+              <b-row class="justify-content-md-center">
+                                <b-col>
+                                    <h1 class="m-2" > {{team_name_full}} </h1> ( {{team_name}} )
+                                </b-col>                             
+                                <b-col>
+                                    <b-row class="justify-content-md-center">
+                                        <img v-if="team_liig == 'NKL'" src="@/assets/NKL_small.png" width="40"/>
+        <img v-else-if="team_liig.startsWith('K')" src="@/assets/kyykkaliiga_small.png" width="40"/>
+        <img v-else-if="team_liig.startsWith('O')" src="@/assets/oamk_small.png" width="40"/><h4 class="m-2" > {{team_liig.split("/")[1]}} </h4>
+                                    </b-row>
+                                </b-col>
+                            </b-row>
+              </template>
             <teams_stats :team_data = "team_data"/>
           </b-card>
         </b-col>

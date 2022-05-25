@@ -111,7 +111,7 @@ p<template lang="html">
       return {
         chartOptions: {
               chart: {
-                  backgroundColor: '#bcd899',
+                  backgroundColor: '#F8CB2E',
               },
               title: {
                   text: ''

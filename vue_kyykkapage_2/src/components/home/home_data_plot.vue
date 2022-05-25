@@ -15,7 +15,7 @@
         chartOptions: {
               chart: {
                   type: 'scatter',
-                  backgroundColor: '#bcd899',
+                  backgroundColor: '#F8CB2E',
               },
               title: {
                   text: ''

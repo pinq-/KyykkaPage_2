@@ -4,8 +4,25 @@
         <b-container fluid>
             <b-row>
                 <b-col>
-                    <b-card class="font-weight-bold theme2" :header = 'player_name + " -------- " + player_team + " --------- " + player_liig' style="overflow:auto" no-body>
+                    <b-card class="font-weight-bold theme2" style="overflow:auto" no-body>
                         <player_stats :player_data = "player_data"/>
+                        <template #header>
+                            <b-row class="justify-content-md-center">
+                                <b-col>
+                                    <h1 class="m-2" > {{player_name}} </h1>
+                                </b-col>
+                                <b-col>
+                                    Joukkue:<h3 class="m-2" > {{player_team}} </h3>
+                                </b-col>                                
+                                <b-col>
+                                    <b-row class="justify-content-md-center">
+                                        <img v-if="player_liig == 'NKL'" src="@/assets/NKL_small.png" width="40"/>
+        <img v-else-if="player_liig.startsWith('K')" src="@/assets/kyykkaliiga_small.png" width="40"/>
+        <img v-else-if="player_liig.startsWith('O')" src="@/assets/oamk_small.png" width="40"/><h4 class="m-2" > {{player_liig.split("/")[1]}} </h4>
+                                    </b-row>
+                                </b-col>
+                            </b-row>
+                        </template>
                     </b-card>
                 </b-col> 
             </b-row>

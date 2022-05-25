@@ -2,34 +2,22 @@
   <div>
     <b-table responsive v-b-tooltip small striped hover :items="items" :fields="fields" class="font-weight-bold" @row-clicked="onRowCliked" :tbody-tr-class="rowClass">
       <template #cell(throw_1) = "data">
-        <b v-if="data.item.throw_1 == data.item.Best_drow" class = 'paras theme1' >
-          {{ data.item.throw_1 }}
-        </b>
-        <b v-else>
+        <b class = 'paras'>
           {{ data.item.throw_1 }}
         </b>
       </template>
       <template #cell(throw_2) = "data">
-        <b v-if="data.item.throw_2 == data.item.Best_drow" class = 'paras theme1' >
-          {{ data.item.throw_2 }}
-        </b>
-        <b v-else>
+        <b class = 'paras'>
           {{ data.item.throw_2 }}
         </b>
       </template>
       <template #cell(throw_3) = "data">
-        <b v-if="data.item.throw_3 == data.item.Best_drow" class = 'paras theme1' >
-          {{ data.item.throw_3 }}
-        </b>
-        <b v-else>
+        <b class = 'paras'>
           {{ data.item.throw_3 }}
         </b>
       </template>
       <template #cell(throw_4) = "data">
-        <b v-if="data.item.throw_4 == data.item.Best_drow" class = 'paras theme1' >
-          {{ data.item.throw_4 }}
-        </b>
-        <b v-else>
+        <b class = 'paras'>
           {{ data.item.throw_4 }}
         </b>
       </template>
@@ -69,7 +57,7 @@
         this.$bvModal.show("modal-1")
       },
       rowClass(item) {
-        if (item.Throw_sum === this.player_round_throws[1]) return 'theme1'
+        if (item.Throw_sum === this.player_round_throws[1]) return 'green_own'
         if ([item.throw_1, item.throw_2, item.throw_3, item.throw_4].every(element => element === 'h')) return 'table-danger'
       },
 
@@ -86,7 +74,8 @@
 
 <style lang="css">
   .paras{
-    color: $theme4 !important;
     border-radius:10px;
+    text-decoration: underline;
+    
   }
 </style>

@@ -22,7 +22,7 @@
             },
             headerTitle: "Heittopaikan keskiarvo"
           },
-          { key: "Best_drow", label: "Paras heitto", headerTitle: "Paras heitto"},        
+          { key: "Best_round", label: "Paras erä", headerTitle: "Paras erä"},        
           { key: "Player_resSum", label: "Pisteet", headerTitle: "Piseet"},
           { key: "OFKL_p", label: "OFKL pisteet", headerTitle: "OFKL pisteet"},
           { key: "NKL_p", label: "NKL pisteet", headerTitle: "NKL pisteet"},

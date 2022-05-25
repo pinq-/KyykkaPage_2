@@ -19,12 +19,12 @@
             formatter:(value, key, item) => {
               return Number((item.Game_mean/item.Games_n).toFixed(2));
             },
-            headerTitle: "Heittopaikan keskiarvo"
+            headerTitle: "Ottelukeskiarvo"
           },
           { key: "Best_game", label: "Paras peli"},        
           { key: "Throw_avg", label: "Hka", headerTitle: "Heittokeskiarvo"},
-          { key: "hauki_pro", label: "H%", headerTitle: "OFKL pisteet"},
-          { key: "null_pro", label: "0%", headerTitle: "NKL pisteet"},
+          { key: "hauki_pro", label: "H%", headerTitle: "Haukiprosentti"},
+          { key: "null_pro", label: "0%", headerTitle: "Nollaprosentti"},
           { key: "Kokemus", label: "Ikä", headerTitle: "Kuinka monta vuotta kokemusta"},
         ]
       }
