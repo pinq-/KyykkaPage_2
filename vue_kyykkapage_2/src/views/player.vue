@@ -4,7 +4,7 @@
         <b-container fluid>
             <b-row>
                 <b-col>
-                    <b-card class="font-weight-bold theme2" style="overflow:auto" no-body>
+                    <b-card class="font-weight-bold theme2 m-2" style="overflow:auto" no-body>
                         <player_stats :player_data = "player_data"/>
                         <template #header>
                             <b-row class="justify-content-md-center">
@@ -28,7 +28,7 @@
             </b-row>
             <b-row>
                 <b-col lg="4">
-                    <b-card class="font-weight-bold theme2" header = 'Pelaajan Hka' style="overflow:auto" no-body>
+                    <b-card class="font-weight-bold theme2 m-2" header = 'Pelaajan Hka' style="overflow:auto" no-body>
                         <player_hka :player_hka_stats = "player_hka_stats"/>
         
                     </b-card>
@@ -36,21 +36,21 @@
                 <b-col>
                     <b-row>
                         <b-col>
-                            <b-card class="font-weight-bold theme2" header = 'Tilastot' style="overflow:auto" no-body>
+                            <b-card class="font-weight-bold theme2 m-2" header = 'Tilastot' style="overflow:auto" no-body>
                                 <player_extra_stats :player_data = "player_data"/>
                             </b-card>
                         </b-col>
                     </b-row>
                     <b-row>
                         <b-col>
-                            <b-card class="font-weight-bold theme2" header = 'Poistettujen kyykkien tilasto' style="overflow:auto" no-body>
+                            <b-card class="font-weight-bold theme2 m-2" header = 'Poistettujen kyykkien tilasto' style="overflow:auto" no-body>
                                 <player_throw_plot :player_throw_divide_data = 'player_throw_divide_data'/>
                             </b-card>
                         </b-col>
                     </b-row>
                 </b-col>
                 <b-col>
-                    <b-card class="font-weight-bold theme2" header = 'Peli tulokset' style="overflow:auto" no-body>
+                    <b-card class="font-weight-bold theme2 m-2" header = 'Peli tulokset' style="overflow:auto" no-body>
                         <game_modals />
                         <player_throws :player_round_throws = 'player_round_throws'/>
                     </b-card>

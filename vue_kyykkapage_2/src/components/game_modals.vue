@@ -8,13 +8,13 @@
               {{result.Home_result}}
             </b-col>
             <b-col style="font-size: 2.25rem;" md="auto">
-              <span style=" color:#E0D338;" @click="Team_selected(true)">
+              <span class = 'Glowing_name' style=" color:#E0D338;" @click="Team_selected(true)">
                 {{result.Home_team_name}}
               </span>
               <span class="text-light">
                 vs.
               </span>
-              <span style=" color:#E0D338;" @click="Team_selected(false)">
+              <span class = 'Glowing_name' style=" color:#E0D338;" @click="Team_selected(false)">
                 {{result.Away_team_name}}
               </span>
             </b-col>
@@ -50,7 +50,7 @@
           <b-col class = "mt-4">
             <b-card no-body class="font-weight-bold theme2" :footer-bg-variant = "result.Home_round1 > result.Away_round1 ? 'success': 'danger'">
               <template #header>
-                <h4 class="mb-0" @click="Team_selected(true)"> {{ result.Home_team_name }} </h4>
+                <h3 class="m-0 Glowing_name" @click="Team_selected(true)"> {{ result.Home_team_name }} </h3>
               </template>
               <b-table responsive v-b-tooltip striped hover :items="game_throws[0]" :fields="fields" class="font-weight-bold" @row-clicked="Player_selected">
                 <template #cell(first)="data">
@@ -78,7 +78,7 @@
           <b-col class = "mt-4">
             <b-card no-body class="font-weight-bold theme2" :footer-bg-variant = "result.Home_round1 < result.Away_round1 ? 'success': 'danger'">
               <template #header>
-                <h4 class="mb-0" @click="Team_selected(false)"> {{ result.Away_team_name }} </h4>
+                <h3 class="m-0 Glowing_name" @click="Team_selected(false)"> {{ result.Away_team_name }} </h3>
               </template>
               <b-table responsive v-b-tooltip striped hover :items="game_throws[1]" :fields="fields" class="font-weight-bold" @row-clicked="Player_selected">
                 <template #cell(first)="data">
@@ -105,6 +105,11 @@
           </b-col>
         </b-row>
         <b-row>
+          <b-col class = 'm-4'>
+            <highcharts :options="chartOptions_first"></highcharts>
+          </b-col>
+        </b-row>
+        <b-row>
           <b-col>
             <h2 class="text-light">Toinen erä</h2>
           </b-col>
@@ -113,7 +118,7 @@
           <b-col class = "mt-4">
             <b-card no-body class="font-weight-bold theme2" :header=result.Home_team_name :footer-bg-variant = "result.Home_round2 > result.Away_round2 ? 'success': 'danger'">
               <template #header>
-                <h4 class="mb-0" @click="Team_selected(true)"> {{ result.Home_team_name }} </h4>
+                <h3 class="m-0 Glowing_name" @click="Team_selected(true)"> {{ result.Home_team_name }} </h3>
               </template>
               <b-table responsive v-b-tooltip striped hover :items="game_throws[2]" :fields="fields" class="font-weight-bold" @row-clicked="Player_selected">
                 <template #cell(first)="data">
@@ -141,7 +146,7 @@
           <b-col class = "mt-4">
             <b-card no-body class="font-weight-bold theme2" :header=result.Away_team_name :footer-bg-variant = "result.Home_round2 < result.Away_round2 ? 'success': 'danger'">
               <template #header>
-                <h4 class="mb-0" @click="Team_selected(false)"> {{ result.Away_team_name }} </h4>
+                <h3 class="m-0 Glowing_name" @click="Team_selected(false)"> {{ result.Away_team_name }} </h3>
               </template>
               <b-table responsive v-b-tooltip striped hover :items="game_throws[3]" :fields="fields" class="font-weight-bold" @row-clicked="Player_selected">
                 <template #cell(first)="data">
@@ -168,11 +173,8 @@
           </b-col>
         </b-row>
         <b-row>
-          <b-col>
-            <highcharts :options="chartOptions_home"></highcharts>
-          </b-col>
-          <b-col>
-            <highcharts :options="chartOptions_away"></highcharts>
+          <b-col class = ' m-4'>
+            <highcharts :options="chartOptions_second"></highcharts>
           </b-col>
         </b-row>
       </b-container>
@@ -290,7 +292,65 @@ export default {
               innerSize: '50%',
               data: []
           }]
-      }
+      },
+
+
+      chartOptions_first: {
+        chart: {
+            backgroundColor: '#F8CB2E',
+            type: 'line',
+
+        },
+        title: {
+            text: 'Ensimmäisen erän kulku'
+        },
+        credits:{enabled:false},
+        xAxis: [{
+            title: { text: 'Heitot' },
+        },
+        ],
+
+        yAxis: [{
+            title: { text: 'Pisteet' },
+        }],
+        series: [
+        ],
+        plotOptions: {
+                series: {
+                    label: {
+                        connectorAllowed: false
+                    },
+                }
+            },
+    },      
+    chartOptions_second: {
+        chart: {
+            backgroundColor: '#F8CB2E',
+            type: 'line',
+
+        },
+        title: {
+            text: 'Toisen erän kulku'
+        },
+        credits:{enabled:false},
+        xAxis: [{
+            title: { text: 'Heitot' },
+        },
+        ],
+
+        yAxis: [{
+            title: { text: 'Pisteet' },
+        }],
+        series: [
+        ],
+        plotOptions: {
+                series: {
+                    label: {
+                        connectorAllowed: false
+                    },
+                }
+            },
+    },
     }
   },
   methods: {
@@ -306,10 +366,14 @@ export default {
     parse_throw(throws){
       var throws_order = ["first", "second", "third", "fourth"], 
       left_order = ["first_left", "second_left", "third_left", "fourth_left"], 
-      data_throws = [[], [], [], []], 
+      player_data_throws = [[], [], [], []], 
+      data_throws = [new Array(17).fill(0), new Array(17).fill(0), new Array(17).fill(0), new Array(17).fill(0)], // For plot
+      throw_order_index = 0,
       last_throws = {home: [], away: []}, 
       teams_hka = {home: [], away: []};
-      var team = "-", 
+      var team = "-",
+      team_away = "-", // For plot text
+      team_home = "-", // For plot text
       last_point = "-",
       order = "home";
       var team_round = 0, 
@@ -327,24 +391,41 @@ export default {
           throw_n = 0
           // When it is not the first time
           if(player.Player__Name != "-"){
-            data_throws[team_round].push(player);
+            player_data_throws[team_round].push(player);
             // console.log(table[team_round]);
           }
           if(val.Player_team != team && team != "-"){
+            last_point = self.get_last_points(player, throw_order_index)
+            // console.log(last_point)
+            if (last_point < 0){
+              data_throws[team_round][throw_order_index] = Math.abs(last_point)
+            }
+            throw_order_index = 0
+            // if (data_throws[team_round].length < 17){
+            //   while(data_throws[team_round].length < 17){
+            //     data_throws[team_round].push(0)
+            //   }
+            // }
+            // console.log(data_throws)
+            data_throws[team_round].sort(function(a, b){return b - a});
             team_round++;
-            last_point = self.get_last_points(player)
             last_throws[order].push(last_point)
             // console.log(last_thorws,last_point, last_throw, left, order)
             if(order == "home"){
               order = "away"
+              team_away = val.Player_team;
             }
             else{
               order = "home"
+              team_home = val.Player_team;
             }
           }
           team = val.Player_team;
           player = {Player__Name: val.Player__Name, first: "-", first_left: 0, second: "-", second_left: 0, third: "-", third_left: 0, fourth: "-", fourth_left: 0, yht: 0, Hka: 0, id: val.Player_id};
         }
+        // console.log(data_throws[team_round], team_round, val['Kyykkas_left'])
+        data_throws[team_round][throw_order_index] = val['Kyykkas_left'] // Add game points to plot line
+        throw_order_index ++;
         player[throws_order[throw_n]] = val.Throw_points;
         player[left_order[throw_n]] = val.Kyykkas_left;
         if (!isNaN(val.Throw_points)){
@@ -373,13 +454,32 @@ export default {
         throw_n++;
         player.Hka = (player.yht / throw_n).toFixed(2);
       });
-      last_point = this.get_last_points(player)
+      last_point = this.get_last_points(player, throw_order_index)
+      if (last_point < 0){
+              data_throws[team_round][throw_order_index] = Math.abs(last_point)
+            }
+      data_throws[team_round].sort(function(a, b){return b - a});
+      // console.log(data_throws)
+      this.chartOptions_first.series = [{
+          name: team_home,
+          data: data_throws[0],
+        },{
+          name: team_away,
+          data: data_throws[1],
+        }]      
+      this.chartOptions_second.series = [{
+          name: team_home,
+          data: data_throws[2],
+        },{
+          name: team_away,
+          data: data_throws[3],
+        }]
       last_throws["away"].push(last_point)
       this.chartOptions_home.series[0].data = throw_names["home"];
       this.chartOptions_away.series[0].data = throw_names["away"];
       // console.log(last_thorws,last_point, last_throw, left, order)
-      data_throws[team_round].push(player);
-      this.game_throws = data_throws;
+      player_data_throws[team_round].push(player);
+      this.game_throws = player_data_throws;
       this.last_throws = last_throws;
       this.result.Home_hka = (teams_hka["home"].reduce((a, b) => a + b, 0)/teams_hka["home"].length).toFixed(2);
       this.result.Away_hka = (teams_hka["away"].reduce((a, b) => a + b, 0)/teams_hka["away"].length).toFixed(2);
@@ -389,25 +489,21 @@ export default {
       .get('https://pinq.kapsi.fi/DK/api/data/game/' + this.selected_game)
       .then(response => (this.parse_values(response.data)));
     },
-    get_last_points(player){
+    get_last_points(player, order){
 
-      if(player.fourth != "-"){
+      if(player.fourth != "-"){ // If there was still points
         if (player.fourth == "h"){
           return -1 * player.fourth_left
         }else{
-          return -1 * (player.fourth_left - player.fourth)
+          return -1 * (player.fourth_left - player.fourth) // subtract last throw points from last left points
         }
       }
       else if (player.third != "-"){
-        if (player.third == "h"){
-          return -1 * player.third_left
-        }else{
-          return -1 * ( player.third_left - player.third)
-        }
-
+        return 1
       }
-      else{
-        return "+"
+      else{ // If there is more than two trows left
+        // console.log('viimeinen', order)
+        return 16 - order
       }
     },
     Player_selected(items) {
@@ -451,7 +547,19 @@ export default {
   background:#202020;
   border-color: #202020;
 }
-.card-header, .card-footer {
-  /*min-width: 440px !important;*/
+
+.Glowing_name:hover {
+  text-shadow:1px 1px #006E7F,
+            2px 2px #006E7F,
+            3px 3px #006E7F,
+            4px 4px #006E7F,
+            5px 5px #006E7F !important;
+}
+
+.Glowing_name {
+  cursor: pointer;
+  text-shadow: 0px 0px !important;
+  font-weight: bold;
+  transition: text-shadow 0.1s ease-out 100ms
 }
 </style>

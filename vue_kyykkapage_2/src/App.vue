@@ -237,10 +237,9 @@
         text-shadow:1px 1px $theme4,
                     2px 2px $theme4,
                     3px 3px $theme4;
-        font-weight: bold;
     }
     th {
-    background-color: $theme3 !important;
+    background-color: #FADA6C !important;
     }
     .modal .modal-huge {
         max-width: 90%;

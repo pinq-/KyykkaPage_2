@@ -57,8 +57,8 @@
           }, label: 'Aika'},
           { key: "Event__Name", label: "Liiga" },
           { key: "Home_team_name", label: "Koti"},
-          { key: "Home_result", label: "Koti tulos"},
-          { key: "Away_result", label: "Vieras tulos"},
+          { key: "Home_result", label: ""},
+          { key: "Away_result", label: ""},
           { key: "Away_team_name", label: "Vieras"}
         ]
       }

@@ -5,7 +5,7 @@
         <b-col>
           <game_modals/>
           <teams_modal/>
-          <b-card class="font-weight-bold theme2" style="overflow:auto" no-body>
+          <b-card class="font-weight-bold theme2 m-2" style="overflow:auto" no-body>
             <template #header>
               <b-row class="justify-content-md-center">
                                 <b-col>
@@ -26,19 +26,19 @@
       </b-row>
       <b-row>
         <b-col lg="4">
-          <b-card class="font-weight-bold theme2" header = 'Joukkueen Oka' style="overflow:auto" no-body>
+          <b-card class="font-weight-bold theme2 m-2" header = 'Joukkueen Oka' style="overflow:auto" no-body>
             <teams_hka_plot :team_Oka_stats = "team_Oka_stats"/>
           </b-card>
         </b-col>        
         <b-col>
-          <b-card class="font-weight-bold theme2" header = 'Pelaajat' style="overflow:auto" no-body>
+          <b-card class="font-weight-bold theme2 m-2" header = 'Pelaajat' style="overflow:auto" no-body>
             <team_players/>
           </b-card>
         </b-col>
       </b-row>
       <b-row>
         <b-col>
-          <b-card class="font-weight-bold theme2" style="overflow:auto" header = 'Pelit' no-body>
+          <b-card class="font-weight-bold theme2 m-2" style="overflow:auto" header = 'Pelit' no-body>
             <team_game_plot :team_data = "team_data"/>
           </b-card>
         </b-col>
