@@ -4,21 +4,21 @@
             <b-row>
             <b-col lg="9">
                 <b-row>
-                    <b-col>
-                        <b-card class="font-weight-bold m-2 theme2" header="Liigojen Oka jakautuminen"  no-body>
-                            <data_plot :year="year" />
+                    <b-col sm="6">
+                        <b-card class="font-weight-bold m-1 theme2" header="Parhaat joukkueet Suomessa" no-body>
+                            <best_teams :liig="liig" :year="year" />
+                        </b-card>
+                    </b-col>
+                    <b-col sm="6">
+                        <b-card class="font-weight-bold m-1 theme2" header="Paras Hka Suomessa" no-body>
+                            <best_players :liig="liig" :year="year" />
                         </b-card>
                     </b-col>
                 </b-row>
                 <b-row>
                     <b-col>
-                        <b-card class="font-weight-bold m-2 theme2" header="Parhaat joukkueet Suomessa" no-body>
-                            <best_teams :liig="liig" :year="year" />
-                        </b-card>
-                    </b-col>
-                    <b-col>
-                        <b-card class="font-weight-bold m-2 theme2" header="Paras Hka Suomessa" no-body>
-                            <best_players :liig="liig" :year="year" />
+                        <b-card class="font-weight-bold m-2 theme2" header="Liigojen Oka jakautuminen"  no-body>
+                            <data_plot :year="year" />
                         </b-card>
                     </b-col>
                 </b-row>

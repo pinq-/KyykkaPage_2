@@ -195,7 +195,7 @@ export default {
       result: [],
       last_throws:{home: [0,0], away: [0,0]},
       fields: [
-        { key: "Player__Name", label: "Nimi"},
+        { key: "Name", label: "Nimi"},
         { key: "first", label: "1."},
         { key: "second", label: "2." },
         { key: "third", label: "3."},
@@ -203,98 +203,6 @@ export default {
         { key: "yht", label: "yht."},
         { key: "Hka", label: "Hka."},
       ],
-      chartOptions_home: {
-        chart: {
-    backgroundColor: null,
-      },
-          title: {
-              text: 'Poistot',
-              align: 'center',
-              verticalAlign: 'middle',
-              style: {
-                  color: 'white'
-              },
-              y: 60
-          },
-          credits:{enabled:false},
-          tooltip: {
-              pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-          },
-          accessibility: {
-              point: {
-                  valueSuffix: '%'
-              }
-          },
-          plotOptions: {
-              pie: {
-                  dataLabels: {
-                      enabled: true,
-                      distance: -50,
-                      style: {
-                          fontWeight: 'bold',
-                          // color: 'white'
-                      }
-                  },
-                  startAngle: -90,
-                  endAngle: 90,
-                  center: ['50%', '75%'],
-                  size: '110%'
-              }
-          },
-          series: [{
-              type: 'pie',
-              name: 'Osuus heitoista',
-              innerSize: '50%',
-              data: []
-          }]
-      },
-      chartOptions_away: {
-        chart: {
-    backgroundColor: null,
-      },
-          title: {
-              text: 'Poistot',
-              align: 'center',
-              verticalAlign: 'middle',
-              style: {
-                  color: 'white'
-              },
-              y: 60
-          },
-          credits:{enabled:false},
-          tooltip: {
-              pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-          },
-          accessibility: {
-              point: {
-                  valueSuffix: '%'
-              }
-          },
-          plotOptions: {
-              pie: {
-                  dataLabels: {
-                      enabled: true,
-                      distance: -50,
-                      style: {
-                          fontWeight: 'bold',
-                          // color: 'white'
-                      }
-                  },
-                  startAngle: -90,
-                  endAngle: 90,
-                  center: ['50%', '75%'],
-                  size: '110%'
-              }
-          },
-          series: [{
-              type: 'pie',
-              name: 'Osuus heitoista',
-              innerSize: '50%',
-              data: []
-          }]
-      },
-
-
       chartOptions_first: {
         chart: {
             backgroundColor: '#F8CB2E',
@@ -379,18 +287,16 @@ export default {
       var team_round = 0, 
       throw_n = 0, 
       throwP = 0;
-      var player = {Player__Name: "-", first: "-", first_left: 0, second: "-", second_left: 0, third: "-", third_left: 0, fourth: "-", fourth_left: 0, yht: 0, Hka: 0, id: 0};
+      var player = {Name: "-", first: "-", first_left: 0, second: "-", second_left: 0, third: "-", third_left: 0, fourth: "-", fourth_left: 0, yht: 0, Hka: 0, id: 0};
       var self = this;
-      var throw_names ={home: [["Hauki", 0],["Virkamies", 0],["2", 0], ["4", 0], ["6", 0], ["8", 0], ["10", 0],["12", 0], [">12", 0]], away: [["Hauki", 0],["Virkamies", 0],["2", 0], ["4", 0], ["6", 0], ["8", 0], ["10", 0],["12", 0], [">12", 0]]};
-
       throws.forEach(function(val){ // Set all the throws to one player object
         // console.log(val)
         // When the player changes in the json list
-        if(player.Player__Name != val.Player__Name){
+        if(player.Name != val.Name){
           //Throw order
           throw_n = 0
           // When it is not the first time
-          if(player.Player__Name != "-"){
+          if(player.Name != "-"){
             player_data_throws[team_round].push(player);
             // console.log(table[team_round]);
           }
@@ -421,7 +327,7 @@ export default {
             }
           }
           team = val.Player_team;
-          player = {Player__Name: val.Player__Name, first: "-", first_left: 0, second: "-", second_left: 0, third: "-", third_left: 0, fourth: "-", fourth_left: 0, yht: 0, Hka: 0, id: val.Player_id};
+          player = {Name: val.Name, first: "-", first_left: 0, second: "-", second_left: 0, third: "-", third_left: 0, fourth: "-", fourth_left: 0, yht: 0, Hka: 0, id: val.Player_id};
         }
         // console.log(data_throws[team_round], team_round, val['Kyykkas_left'])
         data_throws[team_round][throw_order_index] = val['Kyykkas_left'] // Add game points to plot line
@@ -436,23 +342,13 @@ export default {
           }
           teams_hka[order].push(throwP)
           throwP = Math.floor(throwP/2);
-          if(throwP < 7 && throwP > -1){
-            throw_names[order][throwP + 1][1]++;
-          }
-          else{
-            throw_names[order][8][1]++;
-
-          }
         }
         else{
-          if(val.Throw_points == "h"){
-            throw_names[order][0][1]++;
-          }
           teams_hka[order].push(0)
 
         }
         throw_n++;
-        player.Hka = (player.yht / throw_n).toFixed(2);
+        player.Hka = (player.yht / throw_n).toFixed(1);
       });
       last_point = this.get_last_points(player, throw_order_index)
       if (last_point < 0){
@@ -475,8 +371,6 @@ export default {
           data: data_throws[3],
         }]
       last_throws["away"].push(last_point)
-      this.chartOptions_home.series[0].data = throw_names["home"];
-      this.chartOptions_away.series[0].data = throw_names["away"];
       // console.log(last_thorws,last_point, last_throw, left, order)
       player_data_throws[team_round].push(player);
       this.game_throws = player_data_throws;
