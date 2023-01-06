@@ -34,7 +34,7 @@
             sortable: true,
             label: "Hka",
             formatter:(value, key, item) => {
-              return Number((item.Player_resSum / item.Drows_n).toFixed(2));
+              return Number((item.Player_resSum / item.Drows_n).toFixed(1));
             },
             sortByFormatted: true,
             headerTitle: "Heittokeskiarvo"

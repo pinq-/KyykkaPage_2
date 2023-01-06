@@ -2,14 +2,14 @@
     <div class="home">
         <b-container fluid>
             <b-row>
-            <b-col lg="9">
+            <b-col>
                 <b-row>
-                    <b-col sm="6">
+                    <b-col md="5">
                         <b-card class="font-weight-bold m-1 theme2" header="Parhaat joukkueet Suomessa" no-body>
                             <best_teams :liig="liig" :year="year" />
                         </b-card>
                     </b-col>
-                    <b-col sm="6">
+                    <b-col md="7">
                         <b-card class="font-weight-bold m-1 theme2" header="Paras Hka Suomessa" no-body>
                             <best_players :liig="liig" :year="year" />
                         </b-card>
@@ -23,15 +23,15 @@
                     </b-col>
                 </b-row>
             </b-col>
-            <b-col lg="3">
-                <game_modals/>
-                <games_modal/>
+            <b-col sm="4">
                 <b-card class="font-weight-bold mt-2 theme2" no-body header="Viimeisimmät pelit">
                     <new_games :liig="liig" v-on="$listeners"/>
                 </b-card>
             </b-col>
         </b-row>
         </b-container>
+        <game_modals/>
+        <games_modal/>
     </div>
 </template>
 <script>
