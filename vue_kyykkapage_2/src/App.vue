@@ -1,11 +1,33 @@
 <template>
     <div id="app" class="theme4">
         <b-navbar toggleable="lg" type="dark" class="theme3 font-weight-bold">
-            <b-navbar-brand v-b-toggle.sidebar-1>
-                <b-icon icon="arrow-bar-right" font-scale="2"></b-icon>
             </b-navbar-brand>
                 <h1 class = 'font-weight-bold'>Ultimate kyykkä tilastot</h1>
                 <img src="@/assets/logo.png" width="90" class = 'm-2'/>
+                <b-button-toolbar>
+                    <b-button-group class="mr-1">
+                        <b-button class="nav-btn" title="Save file" to="/" >
+                          <b-icon icon="newspaper"></b-icon>
+                        </b-button>
+                        <b-button class="nav-btn" title="Load file" to="/player/-">
+                          <b-icon icon="person-bounding-box"></b-icon>
+                        </b-button>
+                        <b-button class="nav-btn" title="New document" to="/teams/-">
+                          <b-icon icon="people-fill" ></b-icon>
+                        </b-button>        
+                        <b-button class="nav-btn" title="New document" to="/e_info">
+                          <b-icon  icon="journal-bookmark-fill" ></b-icon>
+                        </b-button>        
+                        <b-button class="nav-btn" title="New document" href = "https://github.com/pinq-/KyykkaPage_2/tree/main/vue_kyykkapage_2">
+                          <b-icon  icon="github" ></b-icon>
+                        </b-button>
+                    </b-button-group>
+                </b-button-toolbar>
+                <b-navbar-nav class="ml-auto">
+                    <b-navbar-brand v-b-toggle.sidebar-1>
+                        <b-icon icon="list" font-scale="2"></b-icon>
+                    </b-navbar-brand>
+                </b-navbar-nav>
         </b-navbar>
         <router-view :year="year" :liig="liig" />
         <div id="nav">
@@ -204,6 +226,17 @@
         outline: none !important;
         font-weight: bold !important;
         color: black !important;
+    }    
+    .nav-btn {
+        background-color: $theme2 !important;
+        border: none !important;
+        outline: none !important;
+        font-weight: bold !important;
+        color: black !important;
+    }
+
+    .nav-btn:hover{
+        filter: brightness(150%);
     }
 
     .btn {

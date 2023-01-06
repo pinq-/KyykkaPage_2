@@ -22,10 +22,10 @@ p<template lang="html">
       },
       parse_values(data) {
         // console.log(data)
-        let home_games = []
-        let away_games = []
-        let wheter_temp = []
-        let wheter_snow = []
+        const home_games = []
+        const away_games = []
+        const wheter_temp = []
+        const wheter_snow = []
         data.forEach((value) => {
           let h_game = {name:this.$store.state.team_name_short,  time:0, y:0 ,color : '-', opponent: '-', game_id: 0}
           let a_game = {y:0 ,color : 'rgba(112,112,112, 0.5)', game_id: 0}
@@ -68,15 +68,16 @@ p<template lang="html">
           type: 'column',
           name: 'vastustaja',
           data:away_games,
-          pointPadding: 0.2,
+          // pointPadding: 0.2,
           yAxis:0,
+          pointPlacement: -0.1,
 
           },
         { 
           type: 'column',
           name: 'omat pelit',
           data:home_games,
-          pointPadding: 0.3,
+          // pointPadding: 0.3,
           yAxis:0,
         },        
         { 
@@ -88,7 +89,7 @@ p<template lang="html">
           color:'#0277bd',
         },        
         { 
-          type: 'column',
+          type: 'area',
           name: 'Lumen syvyys',
           data:wheter_snow,
           pointPadding: 0.3,
@@ -112,12 +113,16 @@ p<template lang="html">
         chartOptions: {
               chart: {
                   backgroundColor: '#F8CB2E',
+
               },
               title: {
                   text: ''
               },
               credits:{enabled:false},
               xAxis: [{
+                    gridLineColor: 'rgba(255, 255, 255, 0.47)',
+                    tickmarkPlacement: 'between',
+                    gridLineWidth: 1,
               },
               ],
               legend: {
@@ -128,7 +133,7 @@ p<template lang="html">
               //     title: { text: 'Määrä' },
               // }],
               yAxis: [{
-                reversed: false,
+                reversed: true,
                 title: {
                     text: 'Ottelu tulos'
                 },

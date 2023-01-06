@@ -12,7 +12,7 @@
               <rect v-for='index in bar_size' :key='index' width="15" height="25" :x = 'index * 18' :fill = "getColor_hka(index, 0)" stroke= "rgb(10,10,10)"/>
             </svg>
         <b-button v-if= 'myToggle' v-b-toggle.collapse-1 :pressed.sync="myToggle" variant="primary" >▼</b-button>        
-        <b-button v-if= 'myToggle == false' v-b-toggle.collapse-1 :pressed.sync="myToggle" variant="primary" >▲</b-button>
+        <b-button v-if= '!myToggle' v-b-toggle.collapse-1 :pressed.sync="myToggle" variant="primary" >▲</b-button>
         </b-col>
       </b-row>
       <b-row>
